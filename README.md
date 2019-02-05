@@ -15,15 +15,14 @@ java 使用springboot mybatis beetl集成开发的一个web应用
 
 #### 安装教程
 
-1. xxxx
-2. xxxx
-3. xxxx
+1. mysql创建一个数据库 cwd_boring
+2. 导入sql sql目录下面的
+3. 安装redis 6379端口
 
 #### 使用说明
 
-1. xxxx
-2. xxxx
-3. xxxx
+1. 使用jdk8
+2. mysql 5.7
 
 #### 参与贡献
 
