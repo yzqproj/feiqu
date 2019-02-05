@@ -10,7 +10,7 @@ qq讨论群：632118669
 
 
 #### 软件架构
-软件架构说明
+java 使用springboot mybatis beetl集成开发的一个web应用
 
 
 #### 安装教程
