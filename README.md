@@ -27,7 +27,8 @@ java 使用springboot、mysql、druid、 mybatis、pagehelper、javamail、redis
 #### 使用说明
 
 1. 使用jdk8
-2. mysql 5.7
+2. mysql 5.7 用户名密码 root root
+
 
 #### 参与贡献
 
