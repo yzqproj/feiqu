@@ -5,16 +5,18 @@
 
 社区网站地址：www.flyfun.site 
 qq讨论群：632118669
-接下来几天 我会把项目慢慢迁移到开源版本上面，当然，除了一些私人的信息不会上传，有什么问题可以在下面提问，或者加群讨论。
 
-这个项目使用了hutool工具类作支撑，页面ui使用了layui，集成了阿里云oss、七牛云，支持自动代码生成，支持数据库读写分离，减去了70%的工作量，让你更多的精力放在写业务代码的过程中，
+有什么问题可以在下面提问，或者加群讨论。
+
+这个项目使用了hutool工具类作支撑，参考了zheng项目（https://gitee.com/shuzheng/zheng）以及ruoyi的项目（https://gitee.com/y_project/RuoYi），这两个项目给了我很多的帮助，
+在此谢谢这两个项目的作者，页面ui使用了layui，集成了阿里云oss、七牛云，支持代码自动生成，支持数据库读写分离，减去了70%的工作量，让你更多的精力放在写业务代码的过程中。
 
 当然这个项目还可以用来给你们公司做前端展示页面，也是非常方便的。
 
 
 
 #### 软件架构
-java 使用springboot、mysql、druid、 mybatis、pagehelper、javamail、redis、beetl、hutool、layui、jeesuite集成开发的一个web应用
+使用java作为后端开发 使用springboot、mysql、druid、 mybatis、pagehelper、javamail、redis、beetl、hutool、layui、jeesuite相关技术集成开发的一个web应用
 并且支持爬虫、发邮件。你想要的功能在这应有尽有，如果你还希望集成什么，欢迎提issue
 
 
