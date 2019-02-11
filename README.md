@@ -16,7 +16,7 @@ qq讨论群：632118669
 
 
 #### 软件架构
-使用java作为后端开发 使用springboot、mysql、druid、 mybatis、pagehelper、javamail、redis、beetl、hutool、layui、jeesuite相关技术集成开发的一个web应用
+使用java作为后端开发 使用springboot、mysql、druid、 mybatis、pagehelper、javamail、redis、beetl、hutool、layui、jeesuite、webmagic相关技术集成开发的一个web应用
 并且支持爬虫、发邮件。你想要的功能在这应有尽有，如果你还希望集成什么，欢迎提issue
 
 
