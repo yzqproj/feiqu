@@ -64,9 +64,9 @@ spring:
       static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/
   mail:
     default-encoding: utf-8
-    host: ***
-    username: ***
-    password: ***
+    host: smtp.qq.com
+    username: 123@qq.com
+    password: 2333
     protocol: smtps
   # 资源信息
   messages:
