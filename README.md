@@ -28,6 +28,7 @@ java 使用springboot、mysql、druid、 mybatis、pagehelper、javamail、redis
 
 1. 使用jdk8
 2. mysql 5.7 用户名密码 root root
+3.配置文件里面为 ***的 必须改为自己的配置才能生效
 
 
 #### 参与贡献
