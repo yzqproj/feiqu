@@ -64,9 +64,9 @@ spring:
       static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/
   mail:
     default-encoding: utf-8
-    host: *** #改成你的邮件主机
-    username: *** #邮件服务 登陆用户名
-    password: *** #邮件服务 登陆密码
+    host:  smtp.qq.com #改成你的邮件主机
+    username: 123@qq.com #邮件服务 登陆用户名
+    password: 2333 #邮件服务 登陆密码
     protocol: smtps
   # 资源信息
   messages:
@@ -122,8 +122,8 @@ spring:
               testOnBorrow: false
               testOnReturn: false
               statViewServlet:
-                  login-username: admin
-                  login-password: admin
+                  login-username: chenweidong
+                  login-password: wei930720
                   enabled: true
                   url-pattern: /druid/*
                   reset-enable: true
