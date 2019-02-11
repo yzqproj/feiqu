@@ -8,7 +8,11 @@ qq讨论群：632118669
 
 有什么问题可以在下面提问，或者加群讨论。
 
-这个项目使用了hutool工具类作支撑，参考了zheng项目（https://gitee.com/shuzheng/zheng）以及ruoyi的项目（https://gitee.com/y_project/RuoYi），这两个项目给了我很多的帮助，
+这个项目一开始使用springmvc开发，后来听了群里的人说springboot多么好多么好的，我也就上了贼船，开始了springboot之旅，从此一发不可收拾。
+
+springmvc项目就不演示给大家看了，毕竟那么多配置文件，想想也烦，大家一起加入springboot 大家庭吧
+
+此项目使用了hutool工具类作支撑，参考了zheng项目（https://gitee.com/shuzheng/zheng）以及ruoyi的项目（https://gitee.com/y_project/RuoYi），这两个项目给了我很多的帮助，
 在此谢谢这两个项目的作者，页面ui使用了layui，集成了阿里云oss（支持前端和后端上传）、七牛云，支持代码自动生成，支持数据库读写分离，减去了70%的工作量，让你更多的精力放在写业务代码的过程中。
 
 当然这个项目还可以用来给你们公司做前端展示页面，也是非常方便的。
