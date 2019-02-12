@@ -66,6 +66,14 @@ springmvc项目就不演示给大家看了，毕竟那么多配置文件，想�
    aliyun.filesystem.secretKey=***
    aliyun.filesystem.urlprefix=***
    改成你想要的
+7.支持第三方登陆 现已集成了qq、微博
+    application.properties里面
+    app_id_qq=***
+    app_key_qq=***
+    
+    app_id_sina=***
+    app_key_sina=***
+    改成自己的就可以了
 
 
 #### 参与贡献
