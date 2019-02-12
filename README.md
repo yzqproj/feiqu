@@ -34,8 +34,24 @@ springmvc项目就不演示给大家看了，毕竟那么多配置文件，想�
 
 1. 使用jdk8
 2. mysql 5.7 用户名密码 root root
-3.配置文件里面为 ***的 必须改为自己的配置才能生效
+3.配置文件里面为
+    application-dev.yml:
+        feiqu-redis:
+          servers: localhost:6379
+          password:
+        mail:
+            default-encoding: utf-8
+            host:  smtp.qq.com #改成你的邮件主机
+            username: 123@qq.com #邮件服务 登陆用户名
+            password: 2333 #邮件服务 登陆密码
+    必须改为自己的配置才能生效
+    java类里面
+    com.feiqu.framwork.constant.CommonConstant.USER_ID_COOKIE
+    com.feiqu.framwork.constant.CommonConstant.USER_COOKIE_SECRET
+    com.feiqu.framwork.constant.CommonConstant.FORGET_PASSWORD_SECRET 
+    必须改为自己的配置才能生效
 4.ip2region.db -> \feiqu-opensource\feiqu-front\src\main\resources\ip2region\ip2region.db 转移到自己的文件位置 application-dev.yml:22
+5.com.feiqu.framwork.aspectj.DataSourceAspect 把注释去掉支持读写分离
 
 
 #### 参与贡献
