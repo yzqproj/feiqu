@@ -577,4 +577,16 @@ CREATE TABLE FQ_USER_PAY_WAY
 );
 ALTER TABLE FQ_USER_PAY_WAY COMMENT = '支付方式';
 
+create table wang_hong_wan
+(
+	ID bigint not null auto_increment
+		primary key,
+	AUTHOR varchar(50) default '' not null,
+	AREA varchar(50) default '' not null,
+	CONTENT varchar(500) default '' not null,
+	PIC_LIST varchar(1000) default '' not null
+)
+comment '网红玩'
+;
+
 
