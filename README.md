@@ -51,6 +51,9 @@ springmvc项目就不演示给大家看了，毕竟那么多配置文件，想�
     com.feiqu.framwork.constant.CommonConstant.FORGET_PASSWORD_SECRET 
     必须改为自己的配置才能生效
 4. ip2region.db -> \feiqu-opensource\feiqu-front\src\main\resources\ip2region\ip2region.db 转移到自己的文件位置 application-dev.yml:22
+    这个是参考的https://gitee.com/lionsoul/ip2region 
+    大家也可以去 https://gitee.com/lionsoul/ip2region/blob/master/data/ip2region.db  下载最新的文件
+    然后放到对应的目录就可以了
 5. com.feiqu.framwork.aspectj.DataSourceAspect 把注释去掉支持读写分离
 6. 阿里云和七牛云的配置在——》feiqu-opensource\feiqu-front\src\main\resources\application.properties
    七牛云
