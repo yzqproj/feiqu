@@ -1,6 +1,6 @@
 package com.feiqu.framwork.support.plugin;
 
-import com.feiqu.framwork.util.AESUtil;
+import com.feiqu.common.utils.AESUtil;
 import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 
 //import com.zheng.common.util.AESUtil;
