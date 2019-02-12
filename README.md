@@ -34,7 +34,7 @@ springmvc项目就不演示给大家看了，毕竟那么多配置文件，想�
 
 1. 使用jdk8
 2. mysql 5.7 用户名密码 root root
-3.配置文件里面为
+3. 配置文件里面为
     application-dev.yml:
         feiqu-redis:
           servers: localhost:6379
@@ -50,9 +50,9 @@ springmvc项目就不演示给大家看了，毕竟那么多配置文件，想�
     com.feiqu.framwork.constant.CommonConstant.USER_COOKIE_SECRET
     com.feiqu.framwork.constant.CommonConstant.FORGET_PASSWORD_SECRET 
     必须改为自己的配置才能生效
-4.ip2region.db -> \feiqu-opensource\feiqu-front\src\main\resources\ip2region\ip2region.db 转移到自己的文件位置 application-dev.yml:22
-5.com.feiqu.framwork.aspectj.DataSourceAspect 把注释去掉支持读写分离
-6.阿里云和七牛云的配置在——》feiqu-opensource\feiqu-front\src\main\resources\application.properties
+4. ip2region.db -> \feiqu-opensource\feiqu-front\src\main\resources\ip2region\ip2region.db 转移到自己的文件位置 application-dev.yml:22
+5. com.feiqu.framwork.aspectj.DataSourceAspect 把注释去掉支持读写分离
+6. 阿里云和七牛云的配置在——》feiqu-opensource\feiqu-front\src\main\resources\application.properties
    七牛云
    public.filesystem.provider=qiniu
    public.filesystem.bucketName=***
@@ -66,7 +66,7 @@ springmvc项目就不演示给大家看了，毕竟那么多配置文件，想�
    aliyun.filesystem.secretKey=***
    aliyun.filesystem.urlprefix=***
    改成你想要的
-7.支持第三方登陆 现已集成了qq、微博  微信好像要钱就没弄。。。。
+7. 支持第三方登陆 现已集成了qq、微博  微信好像要钱就没弄。。。。
     application.properties里面
     app_id_qq=***
     app_key_qq=***
