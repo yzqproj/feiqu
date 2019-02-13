@@ -85,6 +85,7 @@ springmvc项目就不演示给大家看了，毕竟那么多配置文件，想�
     具体的类是：com.feiqu.generator.util.CSSGenerator
     在main方法里面：generator(Global.getConfig("gen.packageName"),true,LAST_INSERT_ID_TABLES,false,"FQ_USER_PAY_WAY");
     这句话 把最后一个参数改成自己想要生成代码的表
+10: 支持登陆用户更换背景图片 （pg：一开始运行起来的项目 基本上都是空页面）
 
 
 #### 参与贡献
