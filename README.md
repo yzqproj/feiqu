@@ -81,6 +81,10 @@ springmvc项目就不演示给大家看了，毕竟那么多配置文件，想�
     点击用户头像进去 可以看到左侧的tab多了很多菜单项 那就是后台管理员的操作地方
    
     
+9. 代码生成放在\feiqu-opensource\feiqu-generator 项目中
+    具体的类是：com.feiqu.generator.util.CSSGenerator
+    在main方法里面：generator(Global.getConfig("gen.packageName"),true,LAST_INSERT_ID_TABLES,false,"FQ_USER_PAY_WAY");
+    这句话 把最后一个参数改成自己想要生成代码的表
 
 
 #### 参与贡献
