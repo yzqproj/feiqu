@@ -459,9 +459,10 @@ public class UserController extends BaseController {
                 result.setResult(ResultEnum.USERNAME_EXIST);
                 return result;
             }
-            user.setNickname(StrUtil.cleanBlank(user.getNickname()));
-            user.setUsername(user.getUsername().trim());
-            user.setPassword(user.getPassword().trim());
+            FqUser toRegister = new FqUser();
+            toRegister.setNickname(StrUtil.cleanBlank(user.getNickname()));
+            toRegister.setUsername(user.getUsername().trim());
+            toRegister.setPassword(user.getPassword().trim());
             if(StringUtils.isBlank(user.getNickname())){
                 result.setResult(ResultEnum.PARAM_NULL);
                 return result;
@@ -474,19 +475,19 @@ public class UserController extends BaseController {
                 return result;
             }
             Date now = new Date();
-            user.setCreateIp(WebUtil.getIP(request));
-            user.setCreateTime(now);
-            user.setPassword(DigestUtil.md5Hex(user.getPassword()));
+            toRegister.setCreateIp(WebUtil.getIP(request));
+            toRegister.setCreateTime(now);
+            toRegister.setPassword(DigestUtil.md5Hex(toRegister.getPassword()));
             if (StringUtils.isBlank(user.getIcon())) {
-                user.setIcon(IconUrlConfig.icons.get(new Random().nextInt(IconUrlConfig.size())));
+                toRegister.setIcon(IconUrlConfig.icons.get(new Random().nextInt(IconUrlConfig.size())));
             }
-            user.setIsMailBind(YesNoEnum.NO.getValue());
-            user.setQudouNum(CommonConstant.INIT_QUDOU_NUM);
-            user.setLevel(1);//初始1J
-            user.setStatus(UserStatusEnum.NORMAL.getValue());
-            userService.insert(user);
+            toRegister.setIsMailBind(YesNoEnum.NO.getValue());
+            toRegister.setQudouNum(CommonConstant.INIT_QUDOU_NUM);
+            toRegister.setLevel(1);//初始1J
+            toRegister.setStatus(UserStatusEnum.NORMAL.getValue());
+            userService.insert(toRegister);
             String token = UUID.fastUUID().toString(true);
-            UserActivate userActivate = new UserActivate(user.getId(),token,now);
+            UserActivate userActivate = new UserActivate(toRegister.getId(),token,now);
             userActivateService.insert(userActivate);
 
             //todo delete
@@ -512,14 +513,14 @@ public class UserController extends BaseController {
                 message.setPostUserId(-1);
                 message.setCreateTime(now);
                 message.setDelFlag(YesNoEnum.NO.getValue());
-                message.setReceivedUserId(user.getId());
+                message.setReceivedUserId(toRegister.getId());
                 message.setType(MsgEnum.OFFICIAL_MSG.getValue());
                 message.setContent("系统消息通知：欢迎你来到飞趣社区，希望你在这体验愉快！另外，你可以加入官方qq交流群：632118669,一起讨论。 "+ DateUtil.formatDateTime(now));
                 messageService.insert(message);
             }
             );
 //发送邮件，参数可以是数组
-            WebUtil.loginUser(request,response,user,true);
+            WebUtil.loginUser(request,response,toRegister,true);
         } catch (MailException e) {
             logger.error("注册失败{} ",user.getUsername());
             result.setResult(ResultEnum.FAIL);
@@ -611,8 +612,10 @@ public class UserController extends BaseController {
             baseResult.setResult(ResultEnum.PASSWORD_LENGTH_ERROR);
             return baseResult;
         }
-        queryUser.setPassword(DigestUtil.md5Hex(queryUser.getPassword()));
-        userService.updateByPrimaryKeySelective(queryUser);
+        FqUser toUpdate = new FqUser();
+        toUpdate.setId(queryUser.getId());
+        toUpdate.setPassword(DigestUtil.md5Hex(queryUser.getPassword()));
+        userService.updateByPrimaryKeySelective(toUpdate);
         return baseResult;
     }
 
