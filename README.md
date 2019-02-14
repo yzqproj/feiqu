@@ -22,6 +22,7 @@ springmvc项目就不演示给大家看了，毕竟那么多配置文件，想�
 #### 软件架构
 使用java作为后端开发 使用springboot、mysql、druid、 mybatis、pagehelper、javamail、redis、beetl、hutool、layui、jeesuite、webmagic相关技术集成开发的一个web应用
 并且支持爬虫、发邮件。你想要的功能在这应有尽有，如果你还希望集成什么，欢迎提issue
+用户信息是通过cookie保存的，为期30天 
 
 
 #### 安装教程
@@ -86,8 +87,7 @@ springmvc项目就不演示给大家看了，毕竟那么多配置文件，想�
     在main方法里面：generator(Global.getConfig("gen.packageName"),true,LAST_INSERT_ID_TABLES,false,"FQ_USER_PAY_WAY");
     这句话 把最后一个参数改成自己想要生成代码的表
 10: 支持登陆用户更换背景图片 （pg：一开始运行起来的项目 基本上都是空页面）
-11: 文章发表支持富文本 适用quill框架，相信大家都知道
-
+11: 文章发表支持富文本 适用quill框架，相信大家都知道 
 
 #### 参与贡献
 
