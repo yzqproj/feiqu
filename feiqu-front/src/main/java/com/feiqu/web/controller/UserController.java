@@ -767,7 +767,18 @@ public class UserController extends BaseController {
         if(!queryUser.getUsername().equals(currUser.getUsername())){
             queryUser.setIsMailBind(YesNoEnum.NO.getValue());
         }
-        userService.updateByPrimaryKeySelective(queryUser);
+        FqUser toUpdate = new FqUser();
+        toUpdate.setId(queryUser.getId());
+        toUpdate.setUsername(queryUser.getUsername());
+        toUpdate.setNickname(queryUser.getNickname());
+        toUpdate.setBirth(queryUser.getBirth());
+        toUpdate.setCity(queryUser.getCity());
+        toUpdate.setEducation(queryUser.getEducation());
+        toUpdate.setSchool(queryUser.getSchool());
+        toUpdate.setSex(queryUser.getSex());
+        toUpdate.setIsSingle(queryUser.getIsSingle());
+        toUpdate.setSign(queryUser.getSign());
+        userService.updateByPrimaryKeySelective(toUpdate);
         FqUser fqUserNew = userService.selectByPrimaryKey(queryUser.getId());
         CacheManager.refreshUserCacheByUser(new FqUserCache(fqUserNew));
         return baseResult;
