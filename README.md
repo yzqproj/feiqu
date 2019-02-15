@@ -72,6 +72,7 @@ springmvc项目就不演示给大家看了，毕竟那么多配置文件，想�
        aliyun.filesystem.urlprefix=***
        使用：videoUrl = FileSystemClient.getClient("aliyun").upload("video/"+fileName,localFile);
    改成你想要的
+   注意跨域和url_prefix 
 7. 支持第三方登陆 现已集成了qq、微博  微信好像要钱就没弄。。。。
     application.properties里面
     app_id_qq=***
