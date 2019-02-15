@@ -63,12 +63,14 @@ springmvc项目就不演示给大家看了，毕竟那么多配置文件，想�
        public.filesystem.urlprefix=***
        public.filesystem.accessKey=***
        public.filesystem.secretKey=***
+        picUrl = FileSystemClient.getPublicClient().upload(CommonConstant.FILE_NAME_PREFIX+currentTimeMillis+".jpg", img);
    阿里云
        aliyun.filesystem.bucketName=***
        aliyun.filesystem.endpoint=***
        aliyun.filesystem.accessKey=***
        aliyun.filesystem.secretKey=***
        aliyun.filesystem.urlprefix=***
+       使用：videoUrl = FileSystemClient.getClient("aliyun").upload("video/"+fileName,localFile);
    改成你想要的
 7. 支持第三方登陆 现已集成了qq、微博  微信好像要钱就没弄。。。。
     application.properties里面
