@@ -80,5 +80,11 @@
             <version>${jeesuite.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.ibeetl</groupId>
+            <artifactId>beetl</artifactId>
+            <version>RELEASE</version>
+        </dependency>
+
     </dependencies>
 </project>
