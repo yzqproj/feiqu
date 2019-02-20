@@ -85,6 +85,5 @@
             <artifactId>beetl</artifactId>
             <version>RELEASE</version>
         </dependency>
-
     </dependencies>
 </project>
