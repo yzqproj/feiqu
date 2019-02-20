@@ -89,8 +89,9 @@ springmvc项目就不演示给大家看了，毕竟那么多配置文件，想�
     具体的类是：com.feiqu.generator.util.CSSGenerator
     在main方法里面：generator(Global.getConfig("gen.packageName"),true,LAST_INSERT_ID_TABLES,false,"FQ_USER_PAY_WAY");
     这句话 把最后一个参数改成自己想要生成代码的表
-10: 支持登陆用户更换背景图片 （pg：一开始运行起来的项目 基本上都是空页面）
-11: 文章发表支持富文本 适用quill框架，相信大家都知道 
+10. 支持登陆用户更换背景图片 （pg：一开始运行起来的项目 基本上都是空页面）
+11. 文章发表支持富文本 适用quill框架，相信大家都知道 
+12. [图片] 在这边application.yml 配置开发环境和开发环境 每次打包的时候只要切换一下 我感觉挺好的
 
 #### 参与贡献
 
