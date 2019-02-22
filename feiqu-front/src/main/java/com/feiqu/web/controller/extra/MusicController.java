@@ -103,7 +103,6 @@ public class MusicController extends BaseController{
             }
             //MultipartFile自带的解析方法
             file.transferTo(localFile);
-
 //            String time = DateFormatUtils.format(new Date(),"yyyy/MM/dd");
             musicUrl = FileSystemClient.getClient("aliyun").upload("music/"+fileName,localFile);
 //            aliyunOssClient.putObject(CommonConstant.ALIYUN_OSS_BUCKET_NAME,"music/"+fileName,file.getInputStream());
