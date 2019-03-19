@@ -93,6 +93,7 @@ springmvc项目就不演示给大家看了，毕竟那么多配置文件，想�
 11. 文章发表支持富文本 适用quill框架，相信大家都知道 
 12. [图片] 在这边application.yml 配置开发环境和开发环境 每次打包的时候只要切换一下 我感觉挺好的
 13. redis和mysql的密码都是通过aes加密的，工具类在：com.feiqu.common.utils.AESUtil，避免了明文展示密码。 feiqu-system 是和数据库打交道的
+14. com.feiqu.framwork.init.FeiquInitTrigger和com.feiqu.framwork.init.Initialize是两个初始化的方法，大家可以抽空看一下
 
 
 #### 参与贡献
