@@ -1,8 +1,11 @@
 spring:
   profiles:
     active: dev
-#    active: prod
-
+  #      active: prod
+  servlet:
+    multipart:
+      max-request-size: 50MB
+      max-file-size: 10MB
 
 server:
   # 服务端口
@@ -20,3 +23,7 @@ server:
   address: 0.0.0.0
   compression:
     enabled: true
+  jetty:
+    max-http-post-size: 2MB
+
+
