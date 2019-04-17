@@ -42,7 +42,7 @@ https://gitee.com/vakinge/jeesuite-libs
 3. 配置文件里面为
     application-dev.yml:
         feiqu-redis:
-          servers: localhost:6379
+          servers: localhost:6379 #redis服务的ip和端口
           password:
         mail:
             default-encoding: utf-8
