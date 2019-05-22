@@ -102,8 +102,6 @@ public class UserController extends BaseController {
     //支付方式
     @Resource
     private FqUserPayWayService fqUserPayWayService;
-    /*@Autowired
-    private OSSClient aliyunOssClient;*/
 
     @GetMapping("upLevel")
     public String upLevel(Model model){
@@ -115,7 +113,7 @@ public class UserController extends BaseController {
         Double lastMonthScore = commands.zscore(CommonConstant.FQ_ACTIVE_USER_SORT+lastMonth,fqUserCache.getId().toString());
         Double totolScore = (score == null?0:score)+(lastMonthScore==null?0:lastMonthScore);
         model.addAttribute("totolScore",totolScore);
-        return "/user/upLevel.html";
+        return "/user/upLevel";
     }
 
     @PostMapping("upLevel")
@@ -174,7 +172,7 @@ public class UserController extends BaseController {
         if(fqUserCache.getRole() != 1){
             return GENERAL_ERROR_URL;
         }
-        return "/user/manage.html";
+        return "/user/manage";
     }
     @RequestMapping("/manage/list")
     @ResponseBody
@@ -287,7 +285,7 @@ public class UserController extends BaseController {
         }
         request.setAttribute("qqBind",qqBind);
         request.setAttribute("sinaBind",sinaBind);
-        return "/user/set.html";
+        return "/user/set";
     }
 
     @PostMapping("uploadIcon")
@@ -365,7 +363,7 @@ public class UserController extends BaseController {
     @GetMapping("/login")
     public String login(String redirectSuccessUrl, HttpServletRequest request) {
         request.setAttribute("redirectSuccessUrl", redirectSuccessUrl);
-        return "/login.html";
+        return "/login";
     }
 
     @ResponseBody
@@ -427,7 +425,7 @@ public class UserController extends BaseController {
         } catch (Exception e) {
             logger.error("跳转注册页面出错", e);
         }
-        return "/register.html";
+        return "/register";
     }
 
     @PostMapping("register")
@@ -533,7 +531,7 @@ public class UserController extends BaseController {
     public String activate(String token, HttpServletRequest request, HttpServletResponse response) {
         FqUserCache currUser = webUtil.currentUser(request,response);
         if(currUser == null){
-            return "/error/activateNotLogin.html";
+            return "/error/activateNotLogin";
         }
         if(StringUtils.isNotBlank(token)){
             UserActivateExample example = new UserActivateExample();
@@ -546,7 +544,7 @@ public class UserController extends BaseController {
                 CacheManager.refreshUserCacheByUser(currUser);
             }
         }
-        return "/user/activate.html";
+        return "/user/activate";
     }
 
     @GetMapping("reSendEmail")
@@ -623,9 +621,9 @@ public class UserController extends BaseController {
     public String forget(HttpServletRequest request, String key){
         if(StringUtils.isNotBlank(key)){
             request.setAttribute("key",key);
-            return "/user/passReset.html";
+            return "/user/passReset";
         }
-        return "/user/passForget.html";
+        return "/user/passForget";
     }
 
     @PostMapping("resetPass")
@@ -860,7 +858,7 @@ public class UserController extends BaseController {
             request.setAttribute("messages", messages);
             request.setAttribute("pageIndex", pageIndex);
             request.setAttribute("pageSize", pageSize);
-            return "/user/msgs.html";
+            return "/user/msgs";
     }
 
     @PostMapping("msgsCount")
@@ -893,7 +891,7 @@ public class UserController extends BaseController {
         FqUser oUser = userService.selectByPrimaryKey(pUserId);
         if (oUser == null) {
             request.setAttribute("msg", "error");
-            return "/error.html";
+            return "/error";
         }
         request.setAttribute("oUser", oUser);
         request.setAttribute("user", user);
@@ -922,7 +920,7 @@ public class UserController extends BaseController {
                 .andDelFlagEqualTo(YesNoEnum.NO.getValue());
         UserFollow userFollow = userFollowService.selectFirstByExample(followExample);
         request.setAttribute("follow",userFollow != null);
-        return "/user/peopleIndex.html";
+        return "/user/peopleIndex";
     }
 
     @GetMapping("/center")
@@ -931,7 +929,7 @@ public class UserController extends BaseController {
         if(user == null){
             return login(CommonConstant.DOMAIN_URL+request.getRequestURI(),request);
         }
-        return "/user/center.html";
+        return "/user/center";
     }
 
     //每个人登陆显示的主页
@@ -1021,7 +1019,7 @@ public class UserController extends BaseController {
         }finally {
             JedisProviderFactory.getJedisProvider(null).release();
         }
-        return "/user/home.html";
+        return "/user/home";
     }
 
     @GetMapping("/myIndex")
@@ -1042,7 +1040,7 @@ public class UserController extends BaseController {
         articleExample.createCriteria().andUserIdEqualTo(user.getId()).andDelFlagEqualTo(YesNoEnum.NO.getValue());
         List<Article> articles = articleService.selectByExample(articleExample);
         request.setAttribute("articles", articles);
-        return "/user/myIndex.html";
+        return "/user/myIndex";
     }
 
     private String getEmailHtml(String nickname,String token){

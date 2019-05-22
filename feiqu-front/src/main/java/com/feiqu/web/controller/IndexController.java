@@ -83,9 +83,9 @@ public class IndexController extends BaseController {
             model.addAttribute("activeUserList",CommonConstant.FQ_ACTIVE_USER_LIST);
         }catch (Exception e){
            logger.error("主页 获取数据出错",e);
-           return "/error.html";
+           return "/error";
         }
-        return "/index.html";
+        return "/index";
     }
 
     @RequestMapping(value = "/superGeek")
@@ -135,12 +135,12 @@ public class IndexController extends BaseController {
             map.put(label.getId(),label.getName());
         }
         model.addAttribute("labels",map);
-        return "/superGeek.html";
+        return "/superGeek";
     }
 
     @GetMapping("about")
     public String about(){
-        return "/about.html";
+        return "/about";
     }
 
     @GetMapping(value = "/captcha")
