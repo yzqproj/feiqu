@@ -161,6 +161,7 @@
 		<module>feiqu-system</module>
 		<module>feiqu-generator</module>
 		<module>feiqu-common</module>
+		<module>feiqu-quartz</module>
 	</modules>
 	<packaging>pom</packaging>
 
