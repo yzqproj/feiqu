@@ -1,5 +1,6 @@
 package com.feiqu.framwork.web.base;
 
+import com.feiqu.common.base.AjaxResult;
 import com.feiqu.common.utils.SpringUtils;
 import com.feiqu.framwork.util.SpringContextUtil;
 import com.feiqu.framwork.util.StringEscapeEditor;
@@ -78,6 +79,22 @@ public class BaseController
                 .getResponse();
         WebUtil webUtil = SpringUtils.getBean(WebUtil.class);
         return webUtil.currentUser(request,response);
+    }
+
+    /**
+     * 返回失败消息
+     */
+    public AjaxResult error(String errorMsg)
+    {
+        return AjaxResult.error(errorMsg);
+    }
+
+    /**
+     * 返回失败消息
+     */
+    public AjaxResult error()
+    {
+        return AjaxResult.error();
     }
 
 }
