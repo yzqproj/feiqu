@@ -81,10 +81,9 @@ https://gitee.com/vakinge/jeesuite-libs
     application.properties里面
     app_id_qq=***
     app_key_qq=***
-    
     app_id_sina=***
     app_key_sina=***
-    改成自己的就可以了
+    改成自己的就可以了 记得到qq互联之类的绑定自己的域名哦
 8. 没有写专门的后台 就直接放在前端了 把用户的角色 cwd_boring.fq_user的role字段改成1 就是管理员角色了 
     点击用户头像进去 可以看到左侧的tab多了很多菜单项 那就是后台管理员的操作地方
    
