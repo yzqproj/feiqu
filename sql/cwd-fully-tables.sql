@@ -670,7 +670,6 @@ create table fq_good_pic
 )
 comment '好资源的图片';
 
-drop table if exists sys_job;
 create table sys_job (
                        job_id 		      int(11) 	    not null auto_increment    comment '任务ID',
                        job_name            varchar(64)   default ''                 comment '任务名称',
@@ -695,7 +694,6 @@ create table sys_job (
 -- ----------------------------
 -- 17、定时任务调度日志表
 -- ----------------------------
-drop table if exists sys_job_log;
 create table sys_job_log (
                            job_log_id          int(11) 	    not null auto_increment    comment '任务日志ID',
                            job_name            varchar(64)   not null                   comment '任务名称',
