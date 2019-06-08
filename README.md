@@ -113,5 +113,6 @@ https://gitee.com/vakinge/jeesuite-libs
 ![我的小窝](https://images.gitee.com/uploads/images/2019/0415/212801_be0d1782_1233679.png "TIM图片20190415212747.png")
 ![文章显示](https://images.gitee.com/uploads/images/2019/0415/212852_0f216b2e_1233679.png "TIM图片20190415212836.png")
 ![网址导航](https://images.gitee.com/uploads/images/2019/0415/212953_3c777e7c_1233679.png "TIM图片20190415212936.png")
+![后台管理页面](https://images.gitee.com/uploads/images/2019/0608/224223_2ecc1c13_1233679.png "微信图片_20190608224135.png")
 
 还有一些后台管理页面，这个是通过字段区分渲染的，如果用户的role字段是1，那就显示后台菜单
