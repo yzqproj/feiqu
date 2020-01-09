@@ -222,6 +222,11 @@
 		</dependency>
 	</dependencies>
 
+	<!--  @author chenweidong
+         @qq交流群 632118669
+         @email 573047307@qq.com
+         @link https://www.flyfun.site/
+   -->
 	<build>
 		<plugins>
 			<plugin>
