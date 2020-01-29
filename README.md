@@ -83,7 +83,8 @@ https://gitee.com/vakinge/jeesuite-libs
     app_key_qq=***
     app_id_sina=***
     app_key_sina=***
-    改成自己的就可以了 记得到qq互联之类的绑定自己的域名哦
+    改成自己的就可以了 记得到qq互联之类的绑定自己的域名哦 https://connect.qq.com/?id=1
+
 8. 没有写专门的后台 就直接放在前端了 把用户的角色 cwd_boring.fq_user的role字段改成1 就是管理员角色了 
     点击用户头像进去 可以看到左侧的tab多了很多菜单项 那就是后台管理员的操作地方
    
@@ -92,14 +93,21 @@ https://gitee.com/vakinge/jeesuite-libs
     具体的类是：com.feiqu.generator.util.CSSGenerator
     在main方法里面：generator(Global.getConfig("gen.packageName"),true,LAST_INSERT_ID_TABLES,false,"FQ_USER_PAY_WAY");
     这句话 把最后一个参数改成自己想要生成代码的表
-10. 支持登陆用户更换背景图片 （pg：一开始运行起来的项目 基本上都是空页面）
-11. 文章发表支持富文本 适用quill框架，相信大家都知道 
-12. [图片] 在这边application.yml 配置开发环境和开发环境 每次打包的时候只要切换一下 我感觉挺好的
-13. redis和mysql的密码都是通过aes加密的，工具类在：com.feiqu.common.utils.AESUtil，避免了明文展示密码。 feiqu-system 是和数据库打交道的
-14. com.feiqu.framwork.init.FeiquInitTrigger和com.feiqu.framwork.init.Initialize是两个初始化的方法，大家可以抽空看一下
-15. 我抽出了一个定时任务模块，仿照ruoyi的，SysJobController:在这里面提供图形化的任务界面管理
-16. 这个项目没有后台，通过修改fq_user表的role字段，如果是1，就是管理员。 你们可以看下这个页面：templates/common/_user_menu.html
 
+10. 支持登陆用户更换背景图片 （pg：一开始运行起来的项目 基本上都是空页面）
+
+11. 文章发表支持富文本 适用quill框架，相信大家都知道 
+
+12. [图片] 在这边application.yml 配置开发环境和开发环境 每次打包的时候只要切换一下 我感觉挺好的
+
+13. redis和mysql的密码都是通过aes加密的，工具类在：com.feiqu.common.utils.AESUtil，避免了明文展示密码。 feiqu-system 是和数据库打交道的
+
+14. com.feiqu.framwork.init.FeiquInitTrigger和com.feiqu.framwork.init.Initialize是两个初始化的方法，大家可以抽空看一下
+
+15. 我抽出了一个定时任务模块，仿照ruoyi的，SysJobController:在这里面提供图形化的任务界面管理
+
+16. 这个项目没有后台，通过修改fq_user表的role字段，如果是1，就是管理员。 你们可以看下这个页面：templates/common/_user_menu.html
+后台相关的代码没有开源，不过可以参考ruoyi，因为我就是参考它做的
 
 #### 参与贡献
 
