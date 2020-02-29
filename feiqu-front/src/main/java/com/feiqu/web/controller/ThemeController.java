@@ -108,19 +108,8 @@ public class ThemeController extends BaseController {
         return "/theme/manage";
     }
 
-    @GetMapping("index")
-    public String index(Model model, String order, String label) {
-        return page(model, 0, order, label);
-    }
-
-    @GetMapping("/index/{page}")
-    public String page(Model model, @PathVariable Integer page, String order, String label) {
-       /* FqLabelExample labelExample = new FqLabelExample();
-        labelExample.createCriteria().andDelFlagEqualTo(YesNoEnum.NO.getValue()).andTypeEqualTo(TopicTypeEnum.BBS_TYPE.getValue());
-        List<FqLabel> labelList = labelService.selectByExample(labelExample);
-        request.setAttribute("labelList",labelList);
-        request.setAttribute("areas",CommonConstant.AREA_LIST);*/
-
+    @GetMapping("")
+    public String index(Model model, String order, String label, @RequestParam(defaultValue = "1") Integer page) {
         PageHelper.startPage(page, CommonConstant.DEAULT_PAGE_SIZE, true);
         ThemeCondition condition = new ThemeCondition();
         if ("comment".equals(order)) {
@@ -169,8 +158,18 @@ public class ThemeController extends BaseController {
         model.addAttribute("count", pageInfo.getTotal());
         model.addAttribute("page", page);
         model.addAttribute("pageSize", CommonConstant.DEAULT_PAGE_SIZE);
-        return "/theme/index";
+        return "/theme/theme";
     }
+
+    /*@GetMapping("/index/{page}")
+    public String page(Model model, @PathVariable Integer page, String order, String label) {
+       *//* FqLabelExample labelExample = new FqLabelExample();
+        labelExample.createCriteria().andDelFlagEqualTo(YesNoEnum.NO.getValue()).andTypeEqualTo(TopicTypeEnum.BBS_TYPE.getValue());
+        List<FqLabel> labelList = labelService.selectByExample(labelExample);
+        request.setAttribute("labelList",labelList);
+        request.setAttribute("areas",CommonConstant.AREA_LIST);*//*
+
+    }*/
 
     @ResponseBody
     @PostMapping(value = "pubTheme")
