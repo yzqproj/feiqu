@@ -109,6 +109,10 @@ https://gitee.com/vakinge/jeesuite-libs
 16. 这个项目没有后台，通过修改fq_user表的role字段，如果是1，就是管理员。 你们可以看下这个页面：templates/common/_user_menu.html
 后台相关的代码没有开源，不过可以参考ruoyi，因为我就是参考它做的
 
+17. 私信模块报错的，是mysql的group by问题，可以百度一下解决方案
+
+18. 官网代码和开源的有一些区别，还请各位见谅，未能提供完整的业务代码。官网的有完整的后台项目，如需获取，请私聊作者，谢谢。
+
 #### 参与贡献
 
 1. Fork 本仓库
