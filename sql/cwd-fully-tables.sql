@@ -192,31 +192,6 @@ create table job_talk
 ;
 
 
-
-CREATE TABLE `fq_theme`
-(
-  `id`                int(11) NOT NULL AUTO_INCREMENT,
-  `content`           text,
-  `user_id`           int(11)          DEFAULT NULL,
-  `title`             varchar(255)     DEFAULT NULL,
-  `create_time`       datetime         DEFAULT NULL,
-  `status`            int(11) NOT NULL DEFAULT '1',
-  `comment_count`     int(11)          DEFAULT '0',
-  `label`             varchar(255)     DEFAULT NULL,
-  `type`              int(11)          DEFAULT NULL,
-  `last_pub_nickname` varchar(255)     DEFAULT NULL,
-  `last_pub_time`     datetime         DEFAULT NULL,
-  `see_count`         int(11)          DEFAULT NULL,
-  `area`              varchar(255)     DEFAULT NULL,
-  `pic_url`           varchar(255)     DEFAULT '',
-  `pic_prefix`        varchar(255)     DEFAULT '',
-  `like_count`        int(11)          DEFAULT '0',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB
-  AUTO_INCREMENT = 71
-  DEFAULT CHARSET = utf8;
-
-
 create table upload_img_record
 (
 	id int auto_increment
