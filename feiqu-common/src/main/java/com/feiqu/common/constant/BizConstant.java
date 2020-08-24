@@ -11,7 +11,7 @@ public class BizConstant {
     public static Integer SIGN_DAYS_QUDOU_NUM_30_MORE = 20;
     public static String ALIOSS_IMG_SUFFIX = "?x-oss-process=style/low_qua";
     public static Map<Integer,String> FQ_USER_ROLE_MAP = MapUtil.newHashMap();
-
+    public static String LOG_KEY = "feiqu_log_list";
     /**
      * 通用成功标识
      */
