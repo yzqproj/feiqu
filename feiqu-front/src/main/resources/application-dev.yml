@@ -26,8 +26,6 @@ feiqu-redis:
   password:
   mode: standalone
 
-
-
 # 日志配置
 logging:
   level:
@@ -118,6 +116,17 @@ spring:
   web:
     resources:
       static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/
+  quartz:
+    properties:
+      org:
+        quartz:
+          dataSource:
+            quartzDS:
+              driver: com.mysql.jdbc.Driver
+              URL: jdbc:mysql://localhost:3306/cwd_boring?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+              user: root
+              password: 123456
+
 
 # MyBatis
 mybatis:

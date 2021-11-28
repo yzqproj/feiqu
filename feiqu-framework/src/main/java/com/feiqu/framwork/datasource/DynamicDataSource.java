@@ -9,23 +9,19 @@ import java.util.Map;
 
 /**
  * 动态数据源
- * 
+ *
  * @author ruoyi
  */
-public class DynamicDataSource extends AbstractRoutingDataSource
-{
-    private static Logger logger = LoggerFactory.getLogger(DynamicDataSource.class);
+public class DynamicDataSource extends AbstractRoutingDataSource {
 
-    public DynamicDataSource(DataSource defaultTargetDataSource, Map<Object, Object> targetDataSources)
-    {
+    public DynamicDataSource(DataSource defaultTargetDataSource, Map<Object, Object> targetDataSources) {
         super.setDefaultTargetDataSource(defaultTargetDataSource);
         super.setTargetDataSources(targetDataSources);
         super.afterPropertiesSet();
     }
 
     @Override
-    protected Object determineCurrentLookupKey()
-    {
+    protected Object determineCurrentLookupKey() {
         String dataSourceName = DynamicDataSourceContextHolder.getDateSoureType();
 //        logger.info("当前数据源是：{}", dataSourceName);
         return dataSourceName;

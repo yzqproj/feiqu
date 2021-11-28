@@ -18,13 +18,10 @@ import org.springframework.transaction.annotation.Transactional;
 * Created by cwd on 2019/3/13.
 */
 @Service
-@Transactional
+@Transactional(rollbackFor = Exception.class)
 @BaseService
 public class SysJobLogServiceImpl extends BaseServiceImpl<SysJobLogMapper, SysJobLog, SysJobLogExample> implements SysJobLogService {
 
-    private static Logger _log = LoggerFactory.getLogger(SysJobLogServiceImpl.class);
 
-    @Resource
-    SysJobLogMapper sysJobLogMapper;
 
 }

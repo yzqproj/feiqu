@@ -18,6 +18,7 @@ import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
 import com.mysql.cj.x.protobuf.MysqlxDatatypes;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
  import javax.annotation.Resource;
 import org.springframework.stereotype.Controller;
@@ -36,10 +37,10 @@ import java.util.Map;
  * @create 2017-09-10:51
  **/
 @Controller
+@Slf4j
 public class IndexController extends BaseController {
 
-//    private static Logger logger = LoggerFactory.getLogger(IndexController.class);
-    private static Log logger = LogFactory.get();
+
 
     @Resource
     private ThoughtService thoughtService;
@@ -83,7 +84,7 @@ public class IndexController extends BaseController {
             model.addAttribute("beautySims", CommonConstant.BEAUTY_BANNERS);
             model.addAttribute("activeUserList",CommonConstant.FQ_ACTIVE_USER_LIST);
         }catch (Exception e){
-           logger.error("主页 获取数据出错",e);
+           log .error("主页 获取数据出错",e);
            return "/error";
         }
         return "/index";
@@ -153,7 +154,7 @@ public class IndexController extends BaseController {
             request.getSession().setAttribute("code",lineCaptcha.getCode());
             ImageIO.write(lineCaptcha.getImage(), "JPEG", response.getOutputStream());
         } catch (IOException e) {
-            logger.error("获取验证码出错",e);
+            log .error("获取验证码出错",e);
         }
     }
 

@@ -3,7 +3,11 @@ package com.feiqu.common.utils;
 import com.vdurmont.emoji.EmojiParser;
 
 /**
+ * emoji跑龙套
  * Created by chenweidong on 2018/1/10.
+ *
+ * @author yanni
+ * @date 2021/11/28
  */
 public class EmojiUtils {
 

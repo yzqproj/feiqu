@@ -8,6 +8,7 @@ import com.feiqu.common.utils.SpringUtils;
 import com.feiqu.quartz.model.SysJob;
 import com.feiqu.quartz.model.SysJobLog;
 import com.feiqu.quartz.service.SysJobLogService;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
@@ -22,8 +23,8 @@ import java.util.Date;
  *
  * @author ruoyi
  */
+@Slf4j
 public abstract class AbstractQuartzJob implements Job {
-    private static final Logger log = LoggerFactory.getLogger(AbstractQuartzJob.class);
 
     /**
      * 线程本地变量

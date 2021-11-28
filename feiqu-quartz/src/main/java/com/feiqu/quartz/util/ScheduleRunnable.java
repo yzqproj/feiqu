@@ -2,6 +2,7 @@ package com.feiqu.quartz.util;
 
 
 import com.feiqu.common.utils.SpringUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,8 +15,8 @@ import java.lang.reflect.Method;
  *
  * @author ruoyi
  */
+@Slf4j
 public class ScheduleRunnable implements Runnable {
-    private static final Logger log = LoggerFactory.getLogger(ScheduleRunnable.class);
 
     /**
      * 目标

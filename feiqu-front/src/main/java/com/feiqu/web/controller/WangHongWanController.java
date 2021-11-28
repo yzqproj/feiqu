@@ -34,7 +34,6 @@ import java.util.stream.Collectors;
 @RequestMapping("/wangHong")
 public class WangHongWanController extends BaseController {
 
-    private static Logger logger = LoggerFactory.getLogger(WangHongWanController.class);
 
     @Resource
     private WangHongWanService wangHongWanService;
