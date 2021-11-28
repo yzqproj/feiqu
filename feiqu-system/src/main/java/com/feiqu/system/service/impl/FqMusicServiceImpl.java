@@ -10,7 +10,7 @@ import com.feiqu.system.pojo.response.FqMusicResponse;
 import com.feiqu.system.service.FqMusicService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,7 +28,7 @@ public class FqMusicServiceImpl extends BaseServiceImpl<FqMusicMapper, FqMusic, 
 
     private static Logger _log = LoggerFactory.getLogger(FqMusicServiceImpl.class);
 
-    @Autowired
+    @Resource
     FqMusicMapper fqMusicMapper;
 
     public List<FqMusicResponse> selectWithUserByExample(FqMusicExample example) {

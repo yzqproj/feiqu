@@ -14,12 +14,11 @@ import com.feiqu.system.pojo.cache.FqUserCache;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.quartz.CronExpression;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -31,14 +30,17 @@ import java.util.List;
 
 
 /**
- * SysJobcontroller
+ * 系统工作的控制器
  * Created by cwd on 2019/3/13.
+ *
+ * @author yanni
+ * @date 2021/11/28
  */
 @Controller
 @RequestMapping("/sysJob")
+@Slf4j
 public class SysJobController extends BaseController {
 
-    private static Logger logger = LoggerFactory.getLogger(SysJobController.class);
 
     @Resource
     private Scheduler scheduler;
@@ -80,7 +82,7 @@ public class SysJobController extends BaseController {
         try {
             sysJobService.deleteByPrimaryKey(id);
         } catch (Exception e) {
-            logger.error("error", e);
+            log.error("error", e);
             result.setCode("1");
         }
         return result;
@@ -111,10 +113,10 @@ public class SysJobController extends BaseController {
     public AjaxResult changeStatus(String ids, String status)
     {
         try {
-            logger.info("ids:{},status:{}",ids,status);
+            log.info("ids:{},status:{}",ids,status);
             sysJobService.changeStatus(ids,status);
         } catch (SchedulerException e) {
-            logger.error("changeStatus",e);
+            log.error("changeStatus",e);
             return error();
         }
         return success();
@@ -136,7 +138,7 @@ public class SysJobController extends BaseController {
     public Object save(SysJob sysJob) {
         BaseResult result = new BaseResult();
         try {
-            logger.info("入参：{}", JSON.toJSONString(sysJob));
+            log.info("入参：{}", JSON.toJSONString(sysJob));
             FqUserCache fqUserCache = getCurrentUser();
             if (fqUserCache == null) {
                 result.setResult(ResultEnum.USER_NOT_LOGIN);
@@ -164,7 +166,7 @@ public class SysJobController extends BaseController {
                 ScheduleUtils.updateScheduleJob(scheduler, sysJob);
             }
         } catch (Exception e) {
-            logger.error("error", e);
+            log.error("error", e);
             result.setResult(ResultEnum.SYSTEM_ERROR);
         }
         return result;
@@ -187,7 +189,7 @@ public class SysJobController extends BaseController {
             PageInfo page = new PageInfo(list);
             result.setData(page);
         } catch (Exception e) {
-            logger.error("error", e);
+            log.error("error", e);
             result.setCode("1");
         }
         return result;

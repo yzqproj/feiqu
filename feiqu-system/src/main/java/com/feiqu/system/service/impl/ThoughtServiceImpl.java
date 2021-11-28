@@ -10,7 +10,7 @@ import com.feiqu.system.pojo.response.ThoughtWithUser;
 import com.feiqu.system.service.ThoughtService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,7 +28,7 @@ public class ThoughtServiceImpl extends BaseServiceImpl<ThoughtMapper, Thought, 
 
     private static Logger _log = LoggerFactory.getLogger(ThoughtServiceImpl.class);
 
-    @Autowired
+    @Resource
     ThoughtMapper thoughtMapper;
 
     public List<ThoughtWithUser> getThoughtWithUser(ThoughtExample thoughtExample) {

@@ -9,7 +9,7 @@ import com.feiqu.system.model.UploadImgRecordExample;
 import com.feiqu.system.service.UploadImgRecordService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,7 +25,7 @@ public class UploadImgRecordServiceImpl extends BaseServiceImpl<UploadImgRecordM
 
     private static Logger _log = LoggerFactory.getLogger(UploadImgRecordServiceImpl.class);
 
-    @Autowired
+    @Resource
     UploadImgRecordMapper uploadImgRecordMapper;
 
 }

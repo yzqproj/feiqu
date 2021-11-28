@@ -20,7 +20,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+ import javax.annotation.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,11 +39,11 @@ import java.util.List;
 public class MessageController extends BaseController
 {
     private final static Logger logger = LoggerFactory.getLogger(MessageController.class);
-    @Autowired
+    @Resource
     private WebUtil webUtil;
-    @Autowired
+    @Resource
     private CMessageService messageService;
-    @Autowired
+    @Resource
     private FqUserService fqUserService;
 
     @PostMapping("read")

@@ -9,7 +9,7 @@ import com.feiqu.system.annotation.BaseService;
 import com.feiqu.system.base.BaseServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,7 +24,7 @@ public class SysJobLogServiceImpl extends BaseServiceImpl<SysJobLogMapper, SysJo
 
     private static Logger _log = LoggerFactory.getLogger(SysJobLogServiceImpl.class);
 
-    @Autowired
+    @Resource
     SysJobLogMapper sysJobLogMapper;
 
 }

@@ -10,7 +10,7 @@ import com.feiqu.system.pojo.response.DetailReplyResponse;
 import com.feiqu.system.service.GeneralReplyService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,7 +28,7 @@ public class GeneralReplyServiceImpl extends BaseServiceImpl<GeneralReplyMapper,
 
     private static Logger _log = LoggerFactory.getLogger(GeneralReplyServiceImpl.class);
 
-    @Autowired
+    @Resource
     GeneralReplyMapper generalReplyMapper;
 
     public List<DetailReplyResponse> selectWithUserByExample(GeneralReplyExample replyExample) {

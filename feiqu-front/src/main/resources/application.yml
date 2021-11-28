@@ -5,9 +5,8 @@ spring:
     multipart:
       max-request-size: 50MB
       max-file-size: 10MB
-  config:
-    activate:
-      on-profile: dev
+  profiles:
+    active: dev
 
 server:
   # 服务端口

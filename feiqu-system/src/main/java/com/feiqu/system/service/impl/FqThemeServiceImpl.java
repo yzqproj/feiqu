@@ -11,7 +11,7 @@ import com.feiqu.system.pojo.response.FqThemeUserResponse;
 import com.feiqu.system.service.FqThemeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,7 +29,7 @@ public class FqThemeServiceImpl extends BaseServiceImpl<FqThemeMapper, FqTheme, 
 
     private static Logger _log = LoggerFactory.getLogger(FqThemeServiceImpl.class);
 
-    @Autowired
+    @Resource
     FqThemeMapper fqThemeMapper;
 
     public List<FqThemeUserResponse> selectWithUserByExample(ThemeCondition themeExample) {

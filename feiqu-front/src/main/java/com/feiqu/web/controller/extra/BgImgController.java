@@ -17,7 +17,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+ import javax.annotation.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,13 +39,13 @@ import java.util.List;
 public class BgImgController extends BaseController{
 
     private final static Logger logger = LoggerFactory.getLogger(BgImgController.class);
-    @Autowired
+    @Resource
     private FqBackgroundImgService fqBackgroundImgService;
-    @Autowired
+    @Resource
     private WebUtil webUtil;
-    @Autowired
+    @Resource
     private FqUserService fqUserService;
-    @Autowired
+    @Resource
     private CMessageService messageService;
 
     @GetMapping("update")

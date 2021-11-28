@@ -19,7 +19,7 @@ import cn.hutool.log.LogFactory;
 import com.mysql.cj.x.protobuf.MysqlxDatatypes;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+ import javax.annotation.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -41,19 +41,19 @@ public class IndexController extends BaseController {
 //    private static Logger logger = LoggerFactory.getLogger(IndexController.class);
     private static Log logger = LogFactory.get();
 
-    @Autowired
+    @Resource
     private ThoughtService thoughtService;
 
-    @Autowired
+    @Resource
     private ArticleService articleService;
 
-    @Autowired
+    @Resource
     private SuperBeautyService superBeautyService;
-    @Autowired
+    @Resource
     private FqLabelService fqLabelService;
-    @Autowired
+    @Resource
     private FqUserService fqUserService;
-    @Autowired
+    @Resource
     private WebUtil webUtil;
 
     @GetMapping(value = {"index",""})

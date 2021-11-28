@@ -9,7 +9,7 @@ import com.feiqu.system.model.ApiDocInterfaceExample;
 import com.feiqu.system.service.ApiDocInterfaceService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,7 +25,7 @@ public class ApiDocInterfaceServiceImpl extends BaseServiceImpl<ApiDocInterfaceM
 
     private static Logger _log = LoggerFactory.getLogger(ApiDocInterfaceServiceImpl.class);
 
-    @Autowired
+    @Resource
     ApiDocInterfaceMapper apiDocInterfaceMapper;
 
 }

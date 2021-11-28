@@ -9,7 +9,7 @@ import com.feiqu.system.model.FqWebsiteDirExample;
 import com.feiqu.system.service.FqWebsiteDirService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,7 +27,7 @@ public class FqWebsiteDirServiceImpl extends BaseServiceImpl<FqWebsiteDirMapper,
 
     private static Logger _log = LoggerFactory.getLogger(FqWebsiteDirServiceImpl.class);
 
-    @Autowired
+    @Resource
     FqWebsiteDirMapper fqWebsiteDirMapper;
 
     public List<String> selectTypes() {

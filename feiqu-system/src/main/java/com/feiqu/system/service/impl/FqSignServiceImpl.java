@@ -10,7 +10,7 @@ import com.feiqu.system.pojo.response.SignUserResponse;
 import com.feiqu.system.service.FqSignService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,7 +28,7 @@ public class FqSignServiceImpl extends BaseServiceImpl<FqSignMapper, FqSign, FqS
 
     private static Logger _log = LoggerFactory.getLogger(FqSignServiceImpl.class);
 
-    @Autowired
+    @Resource
     FqSignMapper fqSignMapper;
 
     public List<SignUserResponse> selectWithUserByExample(FqSignExample example) {

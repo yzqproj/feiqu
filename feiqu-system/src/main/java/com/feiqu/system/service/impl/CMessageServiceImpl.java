@@ -10,7 +10,7 @@ import com.feiqu.system.pojo.response.Dialog;
 import com.feiqu.system.pojo.response.MessageUserDetail;
 import com.feiqu.system.service.CMessageService;
 import com.google.common.collect.Maps;
-import org.springframework.beans.factory.annotation.Autowired;
+ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,7 +29,7 @@ public class CMessageServiceImpl extends BaseServiceImpl<CMessageMapper, CMessag
 
 //    private static Logger _log = LoggerFactory.getLogger(CMessageServiceImpl.class);
 
-    @Autowired
+    @Resource
     CMessageMapper cMessageMapper;
 
     public List<MessageUserDetail> selectMyMsgsByMessage(CMessageExample example) {

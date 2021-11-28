@@ -12,7 +12,7 @@ import com.feiqu.system.model.FqTopicReplyExample;
 import com.feiqu.system.service.FqTopicService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,9 +30,9 @@ public class FqTopicServiceImpl extends BaseServiceImpl<FqTopicMapper, FqTopic, 
 
     private static Logger _log = LoggerFactory.getLogger(FqTopicServiceImpl.class);
 
-    @Autowired
+    @Resource
     FqTopicMapper fqTopicMapper;
-    @Autowired
+    @Resource
     FqTopicReplyMapper fqTopicReplyMapper;
 
     @Override

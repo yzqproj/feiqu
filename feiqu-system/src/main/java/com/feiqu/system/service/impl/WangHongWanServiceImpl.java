@@ -9,7 +9,7 @@ import com.feiqu.system.model.WangHongWanExample;
 import com.feiqu.system.service.WangHongWanService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,7 +24,7 @@ public class WangHongWanServiceImpl extends BaseServiceImpl<WangHongWanMapper, W
 
     private static Logger _log = LoggerFactory.getLogger(WangHongWanServiceImpl.class);
 
-    @Autowired
+    @Resource
     WangHongWanMapper wangHongWanMapper;
 
 }

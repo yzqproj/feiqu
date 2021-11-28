@@ -18,7 +18,7 @@ import com.google.common.collect.Maps;
 import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+ import javax.annotation.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,9 +37,9 @@ import java.util.Set;
 @Controller
 public class FindLoveController extends BaseController{
     private final static Logger logger = LoggerFactory.getLogger(FindLoveController.class);
-    @Autowired
+    @Resource
     private FqUserService fqUserService;
-    @Autowired
+    @Resource
     private FqShortVideoService fqShortVideoService;
 
     @RequestMapping("")

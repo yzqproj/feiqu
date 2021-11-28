@@ -12,7 +12,7 @@ import com.feiqu.system.pojo.ThirdPartyUser;
 import com.feiqu.system.service.FqUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,9 +27,9 @@ public class FqUserServiceImpl extends BaseServiceImpl<FqUserMapper, FqUser, FqU
 
     private static Logger _log = LoggerFactory.getLogger(FqUserServiceImpl.class);
 
-    @Autowired
+    @Resource
     FqUserMapper fqUserMapper;
-    @Autowired
+    @Resource
     FqThirdPartyMapper fqThirdPartyMapper;
 
     public int insertThirdPartyUser(FqUser fqUser, ThirdPartyUser thirdUser) {

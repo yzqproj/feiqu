@@ -12,7 +12,7 @@ import com.feiqu.framwork.util.WebUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+ import javax.annotation.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,10 +34,10 @@ public class QuestionController extends BaseController {
 
     private static Logger logger = LoggerFactory.getLogger(QuestionController.class);
 
-    @Autowired
+    @Resource
     private QuestionService questionService;
 
-    @Autowired
+    @Resource
     private WebUtil webUtil;
 
     @RequestMapping("question")

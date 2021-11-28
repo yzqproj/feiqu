@@ -22,7 +22,7 @@ import com.feiqu.system.service.FqUserService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+ import javax.annotation.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,13 +42,13 @@ public class ThirdPartyLoginController extends BaseController {
 
     private final static Logger logger = LoggerFactory.getLogger(ThirdPartyLoginController.class);
 
-    @Autowired
+    @Resource
     private FqUserService fqUserService;
-    @Autowired
+    @Resource
     private FqThirdPartyService fqThirdPartyService;
-    @Autowired
+    @Resource
     private WebUtil webUtil;
-    @Autowired
+    @Resource
     private CMessageService messageService;
 
     @RequestMapping("/sns")

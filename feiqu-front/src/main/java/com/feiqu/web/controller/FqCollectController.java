@@ -11,7 +11,7 @@ import com.feiqu.system.service.FqCollectService;
 import com.feiqu.framwork.util.WebUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+ import javax.annotation.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,9 +32,9 @@ public class FqCollectController  {
 
     private static Logger logger = LoggerFactory.getLogger(FqCollectController.class);
 
-    @Autowired
+    @Resource
     private FqCollectService collectService;
-    @Autowired
+    @Resource
     private WebUtil webUtil;
 
     @GetMapping("/find")

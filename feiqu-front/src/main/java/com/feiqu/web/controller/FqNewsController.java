@@ -27,7 +27,7 @@ import com.google.common.base.Stopwatch;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+ import javax.annotation.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -47,13 +47,13 @@ public class FqNewsController extends BaseController {
 
     private static Logger logger = LoggerFactory.getLogger(FqNewsController.class);
 
-    @Autowired
+    @Resource
     private FqNewsService fqNewsService;
-    @Autowired
+    @Resource
     private GeneralCommentService commentService;
-    @Autowired
+    @Resource
     private FqUserService fqUserService;
-    @Autowired
+    @Resource
     private CMessageService messageService;
 
     /**

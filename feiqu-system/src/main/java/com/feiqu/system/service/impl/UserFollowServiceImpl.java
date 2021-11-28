@@ -10,7 +10,7 @@ import com.feiqu.system.pojo.response.FollowUserResponse;
 import com.feiqu.system.service.UserFollowService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,7 +28,7 @@ public class UserFollowServiceImpl extends BaseServiceImpl<UserFollowMapper, Use
 
     private static Logger _log = LoggerFactory.getLogger(UserFollowServiceImpl.class);
 
-    @Autowired
+    @Resource
     UserFollowMapper userFollowMapper;
 
     public List<FollowUserResponse> selectFollowees(UserFollowExample example) {

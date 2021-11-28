@@ -8,7 +8,7 @@ import com.feiqu.system.model.FqUser;
 import com.feiqu.system.pojo.cache.FqUserCache;
 import com.feiqu.system.service.FqUserService;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

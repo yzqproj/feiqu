@@ -17,7 +17,7 @@ import com.feiqu.system.service.FqUserService;
 import com.feiqu.system.service.GeneralCommentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+ import javax.annotation.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -38,15 +38,15 @@ public class FqNoticeController extends BaseController {
 
     private static Logger logger = LoggerFactory.getLogger(FqNoticeController.class);
 
-    @Autowired
+    @Resource
     private FqNoticeService fqNoticeService;
-    @Autowired
+    @Resource
     private FqUserService fqUserService;
-    @Autowired
+    @Resource
     private GeneralCommentService commentService;
-    @Autowired
+    @Resource
     private WebUtil webUtil;
-    @Autowired
+    @Resource
     private CMessageService messageService;
 
     /**

@@ -9,7 +9,7 @@ import com.feiqu.system.model.FqBackgroundImgExample;
 import com.feiqu.system.service.FqBackgroundImgService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,7 +25,7 @@ public class FqBackgroundImgServiceImpl extends BaseServiceImpl<FqBackgroundImgM
 
     private static Logger _log = LoggerFactory.getLogger(FqBackgroundImgServiceImpl.class);
 
-    @Autowired
+    @Resource
     FqBackgroundImgMapper fqBackgroundImgMapper;
 
 }

@@ -35,7 +35,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+ import javax.annotation.Resource;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -66,36 +66,36 @@ public class UserController extends BaseController {
 
     private static Logger logger = LoggerFactory.getLogger(UserController.class);
 
-    /*@Autowired
+    /*@Resource
     FSProviderSpringFacade provider;*/
 
-    @Autowired
+    @Resource
     private ThoughtService thoughtService;
 
-    @Autowired
+    @Resource
     private ArticleService articleService;
 
-    @Autowired
+    @Resource
     private WebUtil webUtil;
-    @Autowired
+    @Resource
     private CMessageService messageService;
-    @Autowired
+    @Resource
     private UploadImgRecordService uploadImgRecordService;
     @Resource
     private JavaMailSenderImpl mailSender;
-    @Autowired
+    @Resource
     private UserActivateService userActivateService;
-    @Autowired
+    @Resource
     private UserFollowService userFollowService;
-    @Autowired
+    @Resource
     private FqUserService userService;
-    @Autowired
+    @Resource
     private FqThirdPartyService fqThirdPartyService;
-    @Autowired
+    @Resource
     private FqLabelService fqLabelService;
-    @Autowired
+    @Resource
     private FqVisitRecordService visitRecordService;
-    @Autowired
+    @Resource
     private FqCollectService fqCollectService;
     //支付方式
     @Resource

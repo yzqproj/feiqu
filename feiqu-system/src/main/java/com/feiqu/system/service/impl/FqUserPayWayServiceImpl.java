@@ -8,7 +8,7 @@ import com.feiqu.system.model.FqUserPayWayExample;
 import com.feiqu.system.service.FqUserPayWayService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,7 +23,7 @@ public class FqUserPayWayServiceImpl extends BaseServiceImpl<FqUserPayWayMapper,
 
     private static Logger _log = LoggerFactory.getLogger(FqUserPayWayServiceImpl.class);
 
-    @Autowired
+    @Resource
     FqUserPayWayMapper fqUserPayWayMapper;
 
 }

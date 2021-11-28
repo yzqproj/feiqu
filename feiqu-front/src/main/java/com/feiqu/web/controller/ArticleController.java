@@ -26,7 +26,7 @@ import com.google.common.collect.Maps;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+ import javax.annotation.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -48,23 +48,23 @@ public class ArticleController extends BaseController {
 
     private final static Logger _log = LoggerFactory.getLogger(ArticleController.class);
 
-    @Autowired
+    @Resource
     private ArticleService articleService;
-    @Autowired
+    @Resource
     private FqUserService userService;
-    @Autowired
+    @Resource
     private GeneralCommentService commentService;
-    @Autowired
+    @Resource
     private GeneralLikeService likeService;
-    @Autowired
+    @Resource
     private CMessageService messageService;
-    @Autowired
+    @Resource
     private WebUtil webUtil;
-    @Autowired
+    @Resource
     private FqLabelService fqLabelService;
-    @Autowired
+    @Resource
     private FqCollectService fqCollectService;
-    @Autowired
+    @Resource
     private FqUserService fqUserService;
 
    /* @ResponseBody

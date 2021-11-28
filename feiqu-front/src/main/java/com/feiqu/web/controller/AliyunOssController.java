@@ -8,7 +8,7 @@ import com.feiqu.framwork.support.store.AliyunOssService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+ import javax.annotation.Resource;
 import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +24,7 @@ public class AliyunOssController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(AliyunOssController.class);
 
-	@Autowired
+	@Resource
 	private AliyunOssService aliyunOssService;
 
 	/**

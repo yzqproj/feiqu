@@ -9,7 +9,7 @@ import com.feiqu.system.model.FqFriendLinkExample;
 import com.feiqu.system.service.FqFriendLinkService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,7 +25,7 @@ public class FqFriendLinkServiceImpl extends BaseServiceImpl<FqFriendLinkMapper,
 
     private static Logger _log = LoggerFactory.getLogger(FqFriendLinkServiceImpl.class);
 
-    @Autowired
+    @Resource
     FqFriendLinkMapper fqFriendLinkMapper;
 
 }

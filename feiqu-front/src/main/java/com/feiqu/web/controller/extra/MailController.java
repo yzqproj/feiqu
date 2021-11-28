@@ -4,7 +4,7 @@ import com.feiqu.framwork.web.base.BaseController;
 import com.feiqu.common.base.BaseResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+ import javax.annotation.Resource;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
@@ -27,7 +27,7 @@ public class MailController extends BaseController{
 
     private final static Logger logger = LoggerFactory.getLogger(MailController.class);
 
-    @Autowired
+    @Resource
     private JavaMailSenderImpl mailSender;
 
     @GetMapping("groupSend")

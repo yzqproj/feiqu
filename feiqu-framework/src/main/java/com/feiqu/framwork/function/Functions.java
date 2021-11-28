@@ -2,7 +2,7 @@ package com.feiqu.framwork.function;
 
 import com.feiqu.framwork.util.WebUtil;
 import com.feiqu.system.pojo.cache.FqUserCache;
-import org.springframework.beans.factory.annotation.Autowired;
+ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +17,7 @@ import java.net.URLEncoder;
 @Service(value = "beetl_functions")
 public class Functions {
 
-    @Autowired
+    @Resource
     WebUtil webUtil;
 
 

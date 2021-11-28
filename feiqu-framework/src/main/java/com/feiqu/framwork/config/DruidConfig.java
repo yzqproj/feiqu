@@ -22,7 +22,7 @@ import java.util.Map;
  *
  * @author ruoyi
  */
-@Configuration
+//@Configuration
 public class DruidConfig {
     @Bean
     @ConfigurationProperties("spring.datasource.druid.master")

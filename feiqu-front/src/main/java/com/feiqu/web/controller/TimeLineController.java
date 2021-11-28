@@ -14,7 +14,7 @@ import cn.hutool.core.date.DateUtil;
  
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+ import javax.annotation.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,9 +33,9 @@ import java.util.*;
 @RequestMapping("timeline")
 public class TimeLineController extends BaseController {
 
-    @Autowired
+    @Resource
     private UserTimeLineService timeLineService;
-    @Autowired
+    @Resource
     private WebUtil webUtil;
 
     @PostMapping("postTimeline")

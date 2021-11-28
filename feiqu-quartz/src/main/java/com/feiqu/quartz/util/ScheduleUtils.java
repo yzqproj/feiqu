@@ -10,12 +10,10 @@ import org.slf4j.LoggerFactory;
 
 /**
  * 定时任务工具类
- * 
- * @author ruoyi
  *
+ * @author ruoyi
  */
-public class ScheduleUtils
-{
+public class ScheduleUtils {
     private static final Logger log = LoggerFactory.getLogger(ScheduleUtils.class);
 
     /**
@@ -24,8 +22,7 @@ public class ScheduleUtils
      * @param sysJob 执行计划
      * @return 具体执行任务类
      */
-    private static Class<? extends Job> getQuartzJobClass(SysJob sysJob)
-    {
+    private static Class<? extends Job> getQuartzJobClass(@org.jetbrains.annotations.NotNull SysJob sysJob) {
         boolean isConcurrent = "0".equals(sysJob.getConcurrent());
         return isConcurrent ? QuartzJobExecution.class : QuartzDisallowConcurrentExecution.class;
     }
@@ -34,30 +31,24 @@ public class ScheduleUtils
     /**
      * 获取触发器key
      */
-    public static TriggerKey getTriggerKey(Integer jobId)
-    {
+    public static TriggerKey getTriggerKey(Integer jobId) {
         return TriggerKey.triggerKey(ScheduleConstants.TASK_CLASS_NAME + jobId);
     }
 
     /**
      * 获取jobKey
      */
-    public static JobKey getJobKey(Integer jobId)
-    {
+    public static JobKey getJobKey(Integer jobId) {
         return JobKey.jobKey(ScheduleConstants.TASK_CLASS_NAME + jobId);
     }
 
     /**
      * 获取表达式触发器
      */
-    public static CronTrigger getCronTrigger(Scheduler scheduler, Integer jobId)
-    {
-        try
-        {
+    public static CronTrigger getCronTrigger(Scheduler scheduler, Integer jobId) {
+        try {
             return (CronTrigger) scheduler.getTrigger(getTriggerKey(jobId));
-        }
-        catch (SchedulerException e)
-        {
+        } catch (SchedulerException e) {
             log.error("getCronTrigger 异常：", e);
         }
         return null;
@@ -85,8 +76,7 @@ public class ScheduleUtils
         scheduler.scheduleJob(jobDetail, trigger);
 
         // 暂停任务
-        if (job.getStatus().equals(ScheduleConstants.Status.PAUSE.getValue()))
-        {
+        if (job.getStatus().equals(ScheduleConstants.Status.PAUSE.getValue())) {
             pauseJob(scheduler, job.getJobId());
         }
     }
@@ -98,8 +88,7 @@ public class ScheduleUtils
         JobKey jobKey = getJobKey(job.getJobId());
 
         // 判断是否存在
-        if (scheduler.checkExists(jobKey))
-        {
+        if (scheduler.checkExists(jobKey)) {
             // 先移除，然后做更新操作
             scheduler.deleteJob(jobKey);
         }
@@ -107,8 +96,7 @@ public class ScheduleUtils
         createScheduleJob(scheduler, job);
 
         // 暂停任务
-        if (job.getStatus().equals(ScheduleConstants.Status.PAUSE.getValue()))
-        {
+        if (job.getStatus().equals(ScheduleConstants.Status.PAUSE.getValue())) {
             pauseJob(scheduler, job.getJobId());
         }
     }
@@ -146,10 +134,8 @@ public class ScheduleUtils
     }
 
     public static CronScheduleBuilder handleCronScheduleMisfirePolicy(SysJob job, CronScheduleBuilder cb)
-            throws TaskException
-    {
-        switch (job.getMisfirePolicy())
-        {
+            throws TaskException {
+        switch (job.getMisfirePolicy()) {
             case ScheduleConstants.MISFIRE_DEFAULT:
                 return cb;
             case ScheduleConstants.MISFIRE_IGNORE_MISFIRES:

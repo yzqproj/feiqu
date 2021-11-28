@@ -10,7 +10,7 @@ import com.feiqu.system.pojo.response.BeautyUserResponse;
 import com.feiqu.system.service.SuperBeautyService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,7 +28,7 @@ public class SuperBeautyServiceImpl extends BaseServiceImpl<SuperBeautyMapper, S
 
     private static Logger _log = LoggerFactory.getLogger(SuperBeautyServiceImpl.class);
 
-    @Autowired
+    @Resource
     SuperBeautyMapper superBeautyMapper;
 
     public List<BeautyUserResponse> selectDetailByExample(SuperBeautyExample example) {

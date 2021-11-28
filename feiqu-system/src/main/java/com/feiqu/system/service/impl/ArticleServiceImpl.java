@@ -10,7 +10,7 @@ import com.feiqu.system.pojo.response.ArticleUserDetail;
 import com.feiqu.system.service.ArticleService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

@@ -11,7 +11,7 @@ import com.feiqu.system.pojo.response.ThoughtCollectResponse;
 import com.feiqu.system.service.FqCollectService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,7 +29,7 @@ public class FqCollectServiceImpl extends BaseServiceImpl<FqCollectMapper, FqCol
 
     private static Logger _log = LoggerFactory.getLogger(FqCollectServiceImpl.class);
 
-    @Autowired
+    @Resource
     FqCollectMapper fqCollectMapper;
 
     public List<ArticleCollectResponse> selectWithArticleByEntity(FqCollect fqCollect) {

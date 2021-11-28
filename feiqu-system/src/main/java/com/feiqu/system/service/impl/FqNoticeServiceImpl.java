@@ -9,9 +9,10 @@ import com.feiqu.system.model.FqNoticeExample;
 import com.feiqu.system.service.FqNoticeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 
 /**
 * FqNoticeService实现
@@ -25,7 +26,7 @@ public class FqNoticeServiceImpl extends BaseServiceImpl<FqNoticeMapper, FqNotic
 
     private static Logger _log = LoggerFactory.getLogger(FqNoticeServiceImpl.class);
 
-    @Autowired
+    @Resource
     FqNoticeMapper fqNoticeMapper;
 
 }

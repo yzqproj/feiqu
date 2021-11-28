@@ -10,7 +10,7 @@ import com.feiqu.system.pojo.response.FqVisitRecordResponse;
 import com.feiqu.system.service.FqVisitRecordService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,7 +28,7 @@ public class FqVisitRecordServiceImpl extends BaseServiceImpl<FqVisitRecordMappe
 
     private static Logger _log = LoggerFactory.getLogger(FqVisitRecordServiceImpl.class);
 
-    @Autowired
+    @Resource
     FqVisitRecordMapper fqVisitRecordMapper;
 
     public List<FqVisitRecordResponse> selectVisitsByExample(FqVisitRecordExample example) {

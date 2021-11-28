@@ -17,29 +17,33 @@ import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import javax.annotation.Resource;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import java.text.ParseException;
 import java.util.List;
 
 /**
-* SysJobService实现
-* Created by cwd on 2019/3/13.
-*/
+ * sys impl工作服务
+ * SysJobService实现
+ * @author yanni
+ * @date 2021/11/28
+ */
 @Service
-@Transactional
+@Transactional(rollbackFor = Exception.class)
 @BaseService
 public class SysJobServiceImpl extends BaseServiceImpl<SysJobMapper, SysJob, SysJobExample> implements SysJobService {
 
-    private static Logger _log = LoggerFactory.getLogger(SysJobServiceImpl.class);
 
-    @Autowired
+    @Resource
     private Scheduler scheduler;
 
-    @Autowired
+    @Resource
     SysJobMapper sysJobMapper;
 
     /**
@@ -48,16 +52,12 @@ public class SysJobServiceImpl extends BaseServiceImpl<SysJobMapper, SysJob, Sys
     @PostConstruct
     public void init() throws TaskException, SchedulerException {
         List<SysJob> jobList = sysJobMapper.selectByExample(new SysJobExample());
-        for (SysJob job : jobList)
-        {
+        for (SysJob job : jobList) {
             CronTrigger cronTrigger = ScheduleUtils.getCronTrigger(scheduler, job.getJobId());
             // 如果不存在，则创建
-            if (cronTrigger == null)
-            {
+            if (cronTrigger == null) {
                 ScheduleUtils.createScheduleJob(scheduler, job);
-            }
-            else
-            {
+            } else {
                 ScheduleUtils.updateScheduleJob(scheduler, job);
             }
         }
@@ -74,16 +74,19 @@ public class SysJobServiceImpl extends BaseServiceImpl<SysJobMapper, SysJob, Sys
     }
 
     @Override
-    @Transactional
-    public void run(SysJob job) throws SchedulerException {
-        ScheduleUtils.run(scheduler, selectByPrimaryKey(job.getJobId()));
+    @Transactional(rollbackFor = Exception.class)
+    public void run(SysJob job) {
+        try {
+            ScheduleUtils.run(scheduler, selectByPrimaryKey(job.getJobId()));
+        } catch (SchedulerException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void deleteJobByIds(String ids) throws SchedulerException {
         Integer[] jobIds = Convert.toIntArray(ids);
-        for (Integer jobId : jobIds)
-        {
+        for (Integer jobId : jobIds) {
             SysJob job = sysJobMapper.selectByPrimaryKey(jobId);
             sysJobMapper.deleteByPrimaryKey(jobId);
             ScheduleUtils.deleteScheduleJob(scheduler, job.getJobId());
@@ -93,21 +96,16 @@ public class SysJobServiceImpl extends BaseServiceImpl<SysJobMapper, SysJob, Sys
     @Override
     public void changeStatus(String ids, String status) throws SchedulerException {
         Integer[] jobIds = Convert.toIntArray(ids);
-        if (ScheduleConstants.Status.NORMAL.getValue().equals(status))
-        {
-            for (Integer jobId : jobIds)
-            {
+        if (ScheduleConstants.Status.NORMAL.getValue().equals(status)) {
+            for (Integer jobId : jobIds) {
                 SysJob job = new SysJob();
                 job.setJobId(jobId);
                 job.setStatus(status);
                 sysJobMapper.updateByPrimaryKeySelective(job);
                 ScheduleUtils.resumeJob(scheduler, job.getJobId());
             }
-        }
-        else if (ScheduleConstants.Status.PAUSE.getValue().equals(status))
-        {
-            for (Integer jobId : jobIds)
-            {
+        } else if (ScheduleConstants.Status.PAUSE.getValue().equals(status)) {
+            for (Integer jobId : jobIds) {
                 SysJob job = new SysJob();
                 job.setJobId(jobId);
                 job.setStatus(status);

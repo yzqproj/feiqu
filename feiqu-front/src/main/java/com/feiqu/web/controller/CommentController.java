@@ -18,7 +18,7 @@ import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+ import javax.annotation.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,17 +36,17 @@ import java.util.List;
 public class CommentController extends BaseController {
 
     private static Logger logger = LoggerFactory.getLogger(BaseController.class);
-    @Autowired
+    @Resource
     private WebUtil webUtil;
-    @Autowired
+    @Resource
     private GeneralLikeService likeService;
-    @Autowired
+    @Resource
     private GeneralReplyService replyService;
-    @Autowired
+    @Resource
     private GeneralCommentService commentService;
-    @Autowired
+    @Resource
     private FqUserService fqUserService;
-    @Autowired
+    @Resource
     private CMessageService messageService;
 
     /*

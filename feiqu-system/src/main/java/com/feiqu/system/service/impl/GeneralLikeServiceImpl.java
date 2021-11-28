@@ -9,7 +9,7 @@ import com.feiqu.system.model.GeneralLikeExample;
 import com.feiqu.system.service.GeneralLikeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,7 +25,7 @@ public class GeneralLikeServiceImpl extends BaseServiceImpl<GeneralLikeMapper, G
 
     private static Logger _log = LoggerFactory.getLogger(GeneralLikeServiceImpl.class);
 
-    @Autowired
+    @Resource
     GeneralLikeMapper generalLikeMapper;
 
 }

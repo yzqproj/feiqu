@@ -14,7 +14,7 @@ import com.feiqu.system.service.UserFollowService;
 import com.feiqu.framwork.util.WebUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+ import javax.annotation.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -31,11 +31,11 @@ import java.util.List;
 @RequestMapping("follow")
 public class FollowController extends BaseController {
     private static Logger logger = LoggerFactory.getLogger(FollowController.class);
-    @Autowired
+    @Resource
     private UserFollowService userFollowService;
-    @Autowired
+    @Resource
     private WebUtil webUtil;
-    @Autowired
+    @Resource
     private FqUserService userService;
 
     @PostMapping("/{followedUserId}/followers")
