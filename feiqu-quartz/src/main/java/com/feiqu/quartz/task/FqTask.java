@@ -4,10 +4,8 @@ import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.date.DateTime;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.io.FileUtil;
-import cn.hutool.core.util.RandomUtil;
 import cn.hutool.core.util.ReUtil;
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.extra.servlet.ServletUtil;
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
 import cn.hutool.system.SystemUtil;
@@ -20,6 +18,7 @@ import com.feiqu.framwork.constant.CommonConstant;
 import com.feiqu.framwork.support.spider.TopicInfoPipeline;
 import com.feiqu.framwork.support.spider.V2exDTO;
 import com.feiqu.framwork.util.HttpClientUtil;
+import com.feiqu.framwork.util.JedisUtil;
 import com.feiqu.system.model.*;
 import com.feiqu.system.pojo.response.BeautyUserResponse;
 import com.feiqu.system.pojo.response.SimThoughtDTO;
@@ -32,9 +31,8 @@ import com.github.pagehelper.PageHelper;
 import com.google.common.base.Stopwatch;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.jeesuite.cache.redis.JedisProviderFactory;
 import com.jeesuite.filesystem.FileSystemClient;
-import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.slf4j.Logger;
@@ -43,7 +41,7 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.HtmlUtils;
-import redis.clients.jedis.JedisCommands;
+import redis.clients.jedis.commands.JedisCommands;
 import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.model.OOSpider;
 
@@ -51,6 +49,7 @@ import javax.annotation.Resource;
 import javax.mail.internet.MimeMessage;
 import java.io.File;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
@@ -103,7 +102,7 @@ public class FqTask {
             List<ThoughtWithUser> newThoughts = thoughtService.getThoughtWithUser(thoughtExample);
             if (CollectionUtil.isNotEmpty(newThoughts)) {
                 newThoughts.forEach(t -> {
-                    if (org.apache.commons.lang.StringUtils.isNotEmpty(t.getPicList())) {
+                    if ( StringUtils.isNotEmpty(t.getPicList())) {
                         t.setPictures(Arrays.asList(t.getPicList().split(",")));
                     }
                 });
@@ -142,7 +141,7 @@ public class FqTask {
             }
 
             int month = DateUtil.thisMonth() + 1;
-            JedisCommands commands = JedisProviderFactory.getJedisCommands(null);
+            JedisCommands commands = JedisUtil.me();
             Set<String> userIds = commands.zrevrange(CommonConstant.FQ_ACTIVE_USER_SORT + month, 0, 4);
             if (CollectionUtils.isNotEmpty(userIds)) {
                 List<Integer> userIdList = Lists.newArrayList();
@@ -210,7 +209,7 @@ public class FqTask {
                         filterNum += 1;
                         continue;
                     }
-                    if (org.apache.commons.lang.StringUtils.isEmpty(newsResponse.getUrl())) {
+                    if ( StringUtils.isEmpty(newsResponse.getUrl())) {
                         filterNum += 1;
                         continue;
                     }
@@ -426,7 +425,7 @@ public class FqTask {
 //            DateTime ybegin = DateUtil.beginOfDay(DateUtil.yesterday());
             boolean isfirstDay = day == 1;
             int month = DateUtil.thisMonth() + 1;
-            JedisCommands commands = JedisProviderFactory.getJedisCommands(null);
+            JedisCommands commands = JedisUtil.me();
             Set<String> userIds = commands.zrevrange(CommonConstant.FQ_ACTIVE_USER_SORT + month, 0, -1);
             if (CollectionUtils.isNotEmpty(userIds)) {
                 List<Integer> userIdList = Lists.newArrayList();
@@ -482,7 +481,7 @@ public class FqTask {
         } catch (Exception e) {
             logger.error("活跃度计算出错！", e);
         } finally {
-            JedisProviderFactory.getJedisProvider(null).release();
+
         }
     }
 
@@ -595,7 +594,7 @@ public class FqTask {
             nginxLogExample.createCriteria().andCreateTimeLessThan(DateUtil.offsetMonth(new Date(), -12));//删除90天之前的记录
             logService.deleteByExample(nginxLogExample);
             //更新7天的最热想法
-            JedisCommands commands = JedisProviderFactory.getJedisCommands(null);
+            JedisCommands commands = JedisUtil.me();
             PageHelper.startPage(1, 5, false);
             ThoughtExample thoughtExample = new ThoughtExample();
             thoughtExample.setOrderByClause("comment_count desc ");
@@ -607,7 +606,7 @@ public class FqTask {
                     SimThoughtDTO simThoughtDTO = new SimThoughtDTO();
                     simThoughtDTO.setId(t.getId());
                     simThoughtDTO.setContent(t.getThoughtContent());
-                    if (org.apache.commons.lang.StringUtils.isNotEmpty(t.getPicList())) {
+                    if ( StringUtils.isNotEmpty(t.getPicList())) {
                         simThoughtDTO.setPic(t.getPicList().split(",")[0]);
                     } else {
                         simThoughtDTO.setPic("");
@@ -620,7 +619,7 @@ public class FqTask {
         } catch (Exception e) {
             logger.error("nginx日志分析报错", e);
         } finally {
-            JedisProviderFactory.getJedisProvider(null).release();
+             
         }
         stopwatch.stop();
         long seconds = stopwatch.elapsed(TimeUnit.SECONDS);
@@ -639,7 +638,7 @@ public class FqTask {
             Pattern pattern = Pattern.compile("<img.*>");
             Pattern pattern2 = Pattern.compile("<svg.*</svg>");
             for (File fileSingle : files) {
-                String all = FileUtil.readString(fileSingle, "UTF-8");
+                String all = FileUtil.readString(fileSingle, StandardCharsets.UTF_8);
                 JSONObject jsonObject = new JSONObject(all);
                 if (jsonObject.isEmpty()) {
                     continue;

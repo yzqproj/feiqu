@@ -39,16 +39,21 @@ public class CustomErrorController  extends AbstractErrorController {
 		String servletName = (String) request.getAttribute("javax.servlet.error.servlet_name");
 		String requestUri = (String) request.getAttribute("javax.servlet.error.request_uri");
 		Map<String, Object> error = new HashMap<>();
-		if (statusCode != null)
+		if (statusCode != null) {
 			error.put("code", statusCode);
-		if (exception != null)
+		}
+		if (exception != null) {
 			error.put("msg", exception.getMessage());
-		if (exceptionType != null)
+		}
+		if (exceptionType != null) {
 			error.put("exception", exceptionType.getName());
-		if (servletName != null)
+		}
+		if (servletName != null) {
 			error.put("servlet", servletName);
-		if (requestUri != null)
+		}
+		if (requestUri != null) {
 			error.put("uri", requestUri);
+		}
 		//防止部分浏览器、路由器（如小米）等劫持不显示自己的错误页面，强制将code设置为200
 		//但这样ajax就无法检测错误状态，有待商榷
 		response.setStatus(HttpServletResponse.SC_OK);
@@ -60,11 +65,6 @@ public class CustomErrorController  extends AbstractErrorController {
 		
 	}
 
-	@Override
-	public String getErrorPath() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 
 

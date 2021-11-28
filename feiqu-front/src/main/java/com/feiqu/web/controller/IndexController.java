@@ -17,7 +17,8 @@ import cn.hutool.captcha.LineCaptcha;
 import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
 import com.mysql.cj.x.protobuf.MysqlxDatatypes;
-import org.apache.commons.lang.StringUtils;
+
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

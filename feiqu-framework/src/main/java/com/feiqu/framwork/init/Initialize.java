@@ -9,6 +9,7 @@ import com.feiqu.common.enums.GirlCategoryEnum;
 import com.feiqu.common.enums.YesNoEnum;
 import com.feiqu.common.utils.SpringUtils;
 import com.feiqu.framwork.constant.CommonConstant;
+import com.feiqu.framwork.util.JedisUtil;
 import com.feiqu.system.base.BaseInterface;
 import com.feiqu.system.mapper.FqAreaMapper;
 import com.feiqu.system.model.*;
@@ -21,12 +22,12 @@ import com.feiqu.system.service.impl.FqNoticeServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.jeesuite.cache.redis.JedisProviderFactory;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import redis.clients.jedis.Jedis;
 import redis.clients.jedis.commands.JedisCommands;
 
 import java.util.*;
@@ -64,7 +65,6 @@ public class Initialize implements BaseInterface {
 			Date now = new Date();
 			Date sevenDateBefore = DateUtil.offsetDay(now,-7);
 			Date oneMonthDateBefore = DateUtil.offsetDay(now,-31);
-			JedisCommands commands = JedisProviderFactory.getJedisCommands(null);
 			PageHelper.startPage(1, 5 , false);
 			thoughtExample.clear();
 			thoughtExample.setOrderByClause("comment_count desc ");
@@ -84,9 +84,10 @@ public class Initialize implements BaseInterface {
                     simThoughtDTOS.add(simThoughtDTO);
                 });
             }
+			Jedis commands= JedisUtil.me();
 //			String generalFormat = DateUtil.formatDate(now);
 			commands.set(CommonConstant.SEVEN_DAYS_HOT_THOUGHT_LIST, JSON.toJSONString(simThoughtDTOS));
-			commands.expire(CommonConstant.SEVEN_DAYS_HOT_THOUGHT_LIST,2*24*60*60);
+			commands.expire(CommonConstant.SEVEN_DAYS_HOT_THOUGHT_LIST,2*24*60*60L);
 
 			PageHelper.startPage(1, 5 , false);
 			thoughtExample.clear();
@@ -195,7 +196,6 @@ public class Initialize implements BaseInterface {
 		} catch (Exception e) {
 			_log.error("初始化报错",e);
 		} finally {
-			JedisProviderFactory.getJedisProvider(null).release();
 		}
 
 		_log.info(">>>>>飞趣社区 系统初始化完成！<<<<<<");

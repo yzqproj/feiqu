@@ -10,7 +10,7 @@ spring:
 
 server:
   # 服务端口
-  port: 8080
+  port: 9500
   servlet:
     # 项目contextPath
     context-path: /
@@ -25,6 +25,6 @@ server:
   compression:
     enabled: true
   jetty:
-    max-http-post-size: 2MB
+    max-http-form-post-size: 2MB
 
 

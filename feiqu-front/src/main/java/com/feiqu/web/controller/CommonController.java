@@ -9,6 +9,7 @@ import com.feiqu.common.base.BaseResult;
 import com.feiqu.common.enums.ResultEnum;
 import com.feiqu.framwork.constant.CommonConstant;
 import com.feiqu.framwork.util.CommonUtils;
+import com.feiqu.framwork.util.JedisUtil;
 import com.feiqu.framwork.util.WebUtil;
 import com.feiqu.framwork.web.base.BaseController;
 import com.feiqu.system.model.FqUser;
@@ -21,19 +22,18 @@ import com.feiqu.system.service.FqUserService;
 import com.feiqu.system.service.UploadImgRecordService;
 import com.github.pagehelper.PageHelper;
 import com.google.common.collect.Lists;
-import com.jeesuite.cache.redis.JedisProviderFactory;
 import com.jeesuite.filesystem.FileSystemClient;
 import net.coobird.thumbnailator.Thumbnails;
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.time.DateFormatUtils;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateFormatUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import redis.clients.jedis.JedisCommands;
+import redis.clients.jedis.commands.JedisCommands;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -221,7 +221,7 @@ public class CommonController extends BaseController {
     public Object findActiveUserNames(){
         BaseResult result = new BaseResult();
         try {int month = DateUtil.thisMonth()+1;
-            JedisCommands commands = JedisProviderFactory.getJedisCommands(null);
+            JedisCommands commands = JedisUtil.me();
             String key = "activeUserNames"+month;
             Set<String> activeNames = commands.smembers(key);
             if(CollectionUtil.isEmpty(activeNames)){
@@ -245,7 +245,7 @@ public class CommonController extends BaseController {
         } catch (Exception e) {
             logger.error("获取活跃用户信息报错",e);
         } finally {
-            JedisProviderFactory.getJedisProvider(null).release();
+             
         }
         return result;
     }
@@ -279,7 +279,7 @@ public class CommonController extends BaseController {
         } catch (Exception e) {
             logger.error("获取用户信息报错",e);
         } finally {
-            JedisProviderFactory.getJedisProvider(null).release();
+             
         }
         return result;
     }

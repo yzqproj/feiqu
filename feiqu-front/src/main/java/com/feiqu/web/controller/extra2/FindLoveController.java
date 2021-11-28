@@ -3,6 +3,7 @@ package com.feiqu.web.controller.extra2;
 import cn.hutool.core.date.DateUtil;
 import com.feiqu.common.enums.YesNoEnum;
 import com.feiqu.framwork.constant.CommonConstant;
+import com.feiqu.framwork.util.JedisUtil;
 import com.feiqu.framwork.web.base.BaseController;
 import com.feiqu.system.model.FqShortVideo;
 import com.feiqu.system.model.FqShortVideoExample;
@@ -14,15 +15,14 @@ import com.feiqu.system.service.FqShortVideoService;
 import com.feiqu.system.service.FqUserService;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.jeesuite.cache.redis.JedisProviderFactory;
-import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import redis.clients.jedis.JedisCommands;
+import redis.clients.jedis.commands.JedisCommands;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -61,7 +61,7 @@ public class FindLoveController extends BaseController{
 
             int month = DateUtil.thisMonth()+1;
             int lastMonth = month == 1? 12 : month-1;
-            JedisCommands commands = JedisProviderFactory.getJedisCommands(null);
+            JedisCommands commands = JedisUtil.me();
             Set<String> userIds =commands.zrevrange(CommonConstant.FQ_ACTIVE_USER_SORT+month,0,4);
             if(CollectionUtils.isNotEmpty(userIds)){
                 List<Integer> userIdList = Lists.newArrayList();
@@ -111,7 +111,7 @@ public class FindLoveController extends BaseController{
             logger.error("寻找报错",e);
             return "/error";
         } finally {
-            JedisProviderFactory.getJedisProvider(null).release();
+             
         }
         return "/findLove/index";
     }

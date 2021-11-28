@@ -19,7 +19,6 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.*;
@@ -34,14 +33,14 @@ import java.util.concurrent.TimeUnit;
  */
 @Component
 @SuppressWarnings({"unchecked", "all"})
-public class RedisUtils {
-    private static final Logger log = LoggerFactory.getLogger(RedisUtils.class);
+public class RedisUtil {
+    private static final Logger log = LoggerFactory.getLogger(RedisUtil.class);
     @Resource
     private RedisTemplate<Object, Object> redisTemplate;
     //@Value("${jwt.online-key}")
     //private String onlineKey;
 
-    //public RedisUtils(RedisTemplate<Object, Object> redisTemplate) {
+    //public RedisUtil(RedisTemplate<Object, Object> redisTemplate) {
     //    this.redisTemplate = redisTemplate;
     //}
 

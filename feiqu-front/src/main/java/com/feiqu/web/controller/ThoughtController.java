@@ -9,6 +9,8 @@ import com.feiqu.common.utils.EmojiUtils;
 import com.feiqu.framwork.constant.CommonConstant;
 import com.feiqu.framwork.support.cache.CacheManager;
 import com.feiqu.framwork.util.CommonUtils;
+import com.feiqu.framwork.util.JedisUtil;
+import com.feiqu.framwork.util.RedisUtil;
 import com.feiqu.framwork.util.WebUtil;
 import com.feiqu.framwork.web.base.BaseController;
 import com.feiqu.system.model.*;
@@ -18,19 +20,20 @@ import com.feiqu.system.pojo.response.ThoughtWithUser;
 import com.feiqu.system.service.*;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.jeesuite.cache.command.RedisString;
-import com.jeesuite.cache.redis.JedisProviderFactory;
-import org.apache.commons.lang.StringUtils;
+
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import redis.clients.jedis.JedisCommands;
+import redis.clients.jedis.Jedis;
+import redis.clients.jedis.commands.JedisCommands;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.security.Key;
 import java.util.Date;
 import java.util.List;
 
@@ -83,12 +86,13 @@ public class ThoughtController extends BaseController {
             thoughtWithUser.setIcon(fqUser.getIcon());
             thoughtWithUser.setNickname(fqUser.getNickname());
             thoughtWithUser.setUsername(fqUser.getUsername());
-            RedisString redisString = new RedisString(CommonConstant.THOUGHT_TOP_LIST);
-            if(StringUtils.isEmpty(redisString.get())){
-                redisString.set(JSON.toJSONString(thoughtWithUser),24*60*60);
+          String redisString = JedisUtil.me().get(CommonConstant.THOUGHT_TOP_LIST);
+            if(StringUtils.isEmpty(redisString )){
+                JedisUtil.me().set(JSON.toJSONString(thoughtWithUser), String.valueOf(24*60*60));
             }else {
                 result.setResult(ResultEnum.THOUGHT_TOP_EXIST);
-                result.setMessage("置顶的想法已经存在,需要等待"+redisString.getTtl()/60+"分钟");
+                long time = JedisUtil.me().ttl(CommonConstant.THOUGHT_TOP_LIST);
+                result.setMessage("置顶的想法已经存在,需要等待"+time/60+"分钟");
                 return result;
             }
             CommonUtils.addOrDelUserQudouNum(user,-20);
@@ -119,11 +123,11 @@ public class ThoughtController extends BaseController {
                 return result;
             }
 
-            RedisString redisString = new RedisString(CommonConstant.THOUGHT_TOP_LIST);
-            if(StringUtils.isEmpty(redisString.get())){
+            if(StringUtils.isEmpty(JedisUtil.me().get(CommonConstant.THOUGHT_TOP_LIST))){
             }else {
+                long time= Long.parseLong(JedisUtil.me().get("tcl"));
                 result.setResult(ResultEnum.THOUGHT_TOP_EXIST);
-                result.setMessage("置顶的想法已经存在,需要等待"+redisString.getTtl()/60+"分钟");
+                result.setMessage("置顶的想法已经存在,需要等待"+time/60+"分钟");
                 return result;
             }
         } catch (Exception e) {
@@ -156,12 +160,12 @@ public class ThoughtController extends BaseController {
                 return result;
             }
             String key = "postThought_"+ip+"_"+user.getId();
-            RedisString redisString = new RedisString(key);
-            String value = redisString.get();
+           Jedis jedis=JedisUtil.me();
+            String value = jedis.get(key);
             if(StringUtils.isEmpty(value)){
-                redisString.set("1", 60);
+                jedis.set("1", String.valueOf(60));
             }else {
-                long time = redisString.getTtl();
+                long time = Long.parseLong(jedis.get("ttl"));
                 result.setResult(ResultEnum.POST_THOUGHT_FREQUENCY_OVER_LIMIT);
                 result.setMessage("发表想法频率超过限制，请过"+time+"秒再试!");
                 return result;
@@ -265,10 +269,10 @@ public class ThoughtController extends BaseController {
             }
 
             String key = "thought_comment_"+thoughtId+"_"+user.getId()+"_"+ip;
-            RedisString redisString = new RedisString(key);
-            String value = redisString.get();
+            Jedis jedis=JedisUtil.me();
+            String value = jedis.get(key);
             if(StringUtils.isEmpty(value)){
-                redisString.set("1", 60);
+               jedis.set("1", String.valueOf(60));
             }else {
                 result.setResult(ResultEnum.THOUGHT_COMMENT_FREQUENCY_OVER_LIMIT);
                 return result;
@@ -389,13 +393,13 @@ public class ThoughtController extends BaseController {
             List<Thought> theirThoughts = thoughtService.selectByExample(thoughtExample);
             model.addAttribute("theirThoughts",theirThoughts);
             int month = DateUtil.thisMonth()+1;
-            JedisCommands commands = JedisProviderFactory.getJedisCommands(null);
+            JedisCommands commands = JedisUtil.me();
             Double score = commands.zscore(CommonConstant.FQ_ACTIVE_USER_SORT+month,thoughtUser.getId().toString());
             model.addAttribute("activeNum",score == null?0:score.intValue());
         } catch (Exception e) {
             logger.error("thought 详情失败！",e);
         }finally {
-            JedisProviderFactory.getJedisProvider(null).release();
+             
         }
         return "/thought/detail";
     }
@@ -421,7 +425,7 @@ public class ThoughtController extends BaseController {
             List<Integer> list = fqCollectService.selectTopicIdsByTypeAndUid(TopicTypeEnum.THOUGHT_TYPE.getValue(),user.getId());
             if(list != null && list.size() > 0){
                 try {
-                    JedisCommands commands = JedisProviderFactory.getJedisCommands(null);
+                    JedisCommands commands = JedisUtil.me();
                     String key = CacheManager.getCollectKey(TopicTypeEnum.THOUGHT_TYPE.name(),user.getId());
                     long redisCount = commands.scard(key);
                     if(redisCount == 0){
@@ -434,7 +438,7 @@ public class ThoughtController extends BaseController {
                         thoughtWithUser.setCollected(commands.sismember(key,thoughtWithUser.getId().toString()));
                     }
                 } finally{
-                    JedisProviderFactory.getJedisProvider(null).release();
+                     
                 }
             }
 

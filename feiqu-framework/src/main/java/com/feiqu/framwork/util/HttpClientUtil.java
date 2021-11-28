@@ -1,6 +1,7 @@
 package com.feiqu.framwork.util;
 
 import com.feiqu.framwork.constant.CommonConstant;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.http.*;
 import org.apache.http.client.CookieStore;
 import org.apache.http.client.HttpRequestRetryHandler;
@@ -31,8 +32,6 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HttpContext;
 import org.apache.http.ssl.SSLContexts;
 import org.apache.http.util.EntityUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLException;
@@ -51,8 +50,8 @@ import java.util.Random;
 /**
  * HttpClient工具类
  */
+@Slf4j
 public class HttpClientUtil {
-    private static Logger logger = LogManager.getLogger(HttpClientUtil.class);
     private static CookieStore cookieStore = new BasicCookieStore();
     private static CloseableHttpClient httpClient;
     private final static String userAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.110 Safari/537.36";
@@ -132,7 +131,7 @@ public class HttpClientUtil {
                     setCookieSpec(CookieSpecs.STANDARD).
                     build();
         } catch (Exception e) {
-            logger.error("Exception:", e);
+            log.error("Exception:", e);
         }
     }
 
@@ -157,7 +156,7 @@ public class HttpClientUtil {
             , String encoding) throws IOException {
         CloseableHttpResponse response = null;
         response = getResponse(request);
-        logger.info("status---" + response.getStatusLine().getStatusCode());
+        log.info("status---" + response.getStatusLine().getStatusCode());
         String content = EntityUtils.toString(response.getEntity(),encoding);
         request.releaseConnection();
         return content;
@@ -191,7 +190,7 @@ public class HttpClientUtil {
             fos = new FileOutputStream(filePath, false);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(object);
-            logger.info("序列化成功");
+            log.info("序列化成功");
             oos.flush();
             fos.close();
             oos.close();
@@ -232,13 +231,13 @@ public class HttpClientUtil {
             , Boolean isReplaceFile){
         try{
             CloseableHttpResponse response = getResponse(fileURL);
-            logger.info("status:" + response.getStatusLine().getStatusCode());
+            log.info("status:" + response.getStatusLine().getStatusCode());
             File file =new File(path);
             //如果文件夹不存在则创建
             if  (!file .exists()  && !file .isDirectory()){
                 file.mkdirs();
             } else{
-                logger.info("//目录存在");
+                log.info("//目录存在");
             }
             file = new File(path + saveFileName);
             if(!file.exists() || isReplaceFile){
@@ -255,22 +254,22 @@ public class HttpClientUtil {
                         byte[] temp = new byte[readed];
                         System.arraycopy(buff, 0, temp, 0, readed);
                         os.write(temp);
-                        logger.info("文件下载中....");
+                        log.info("文件下载中....");
                     }
                     is.close();
                     os.close();
-                    logger.info(fileURL + "--文件成功下载至" + path + saveFileName);
+                    log.info(fileURL + "--文件成功下载至" + path + saveFileName);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
             else{
-                logger.info(path);
-                logger.info("该文件存在！");
+                log.info(path);
+                log.info("该文件存在！");
             }
             response.close();
         } catch(IllegalArgumentException e){
-            logger.info("连接超时...");
+            log.info("连接超时...");
         } catch(Exception e1){
             e1.printStackTrace();
         }
@@ -305,7 +304,7 @@ public class HttpClientUtil {
             dataStr = dataStr.replace("\\u" + tempStr, letter + "");
             start = end;
         }
-        logger.debug(dataStr);
+        log.debug(dataStr);
         return dataStr;
     }
     /**
@@ -334,6 +333,6 @@ public class HttpClientUtil {
     }
     public static void main(String args []){
         String s = "{    \"r\": 1,    \"errcode\": 100000,        \"data\": {\"account\":\"\\u5e10\\u53f7\\u6216\\u5bc6\\u7801\\u9519\\u8bef\"},            \"msg\": \"\\u8be5\\u624b\\u673a\\u53f7\\u5c1a\\u672a\\u6ce8\\u518c\\u77e5\\u4e4e";
-        logger.info(decodeUnicode(s));
+        log.info(decodeUnicode(s));
     }
 }

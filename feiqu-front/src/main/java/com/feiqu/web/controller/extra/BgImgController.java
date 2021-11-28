@@ -5,6 +5,7 @@ import com.feiqu.common.base.BaseResult;
 import com.feiqu.common.enums.*;
 import com.feiqu.framwork.support.cache.CacheManager;
 import com.feiqu.framwork.util.CommonUtils;
+import com.feiqu.framwork.util.JedisUtil;
 import com.feiqu.framwork.util.WebUtil;
 import com.feiqu.framwork.web.base.BaseController;
 import com.feiqu.system.model.*;
@@ -12,9 +13,7 @@ import com.feiqu.system.pojo.cache.FqUserCache;
 import com.feiqu.system.service.CMessageService;
 import com.feiqu.system.service.FqBackgroundImgService;
 import com.feiqu.system.service.FqUserService;
-import com.jeesuite.cache.command.RedisString;
-import com.jeesuite.cache.redis.JedisProviderFactory;
-import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +24,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import redis.clients.jedis.JedisCommands;
+import redis.clients.jedis.commands.JedisCommands;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -135,7 +134,7 @@ public class BgImgController extends BaseController{
                 fqBackgroundImgService.updateByPrimaryKey(fqBackgroundImgDB);
             }
 
-            JedisCommands commands = JedisProviderFactory.getJedisCommands(null);
+            JedisCommands commands = JedisUtil.me();
              String key = CacheManager.getUserBackImgKey(fqUser.getId());
              commands.set(key,picUrl);
              commands.expire(key,60*60*24);
@@ -144,7 +143,7 @@ public class BgImgController extends BaseController{
              logger.error("更新背景图片失败！",e);
              result.setResult(ResultEnum.FAIL);
          }finally{
-             JedisProviderFactory.getJedisProvider(null).release();
+              
          }
          result.setData(picUrl);
          return result;
@@ -179,12 +178,11 @@ public class BgImgController extends BaseController{
                     return result;
                 }
                 String key = "recommendBgImg_"+fqUser.getId();
-                RedisString redisString = new RedisString(key);
-                String value = redisString.get();
-                if(org.apache.commons.lang.StringUtils.isEmpty(value)){
-                    redisString.set("1", 60);
+                String value =JedisUtil.me().get(key);
+                if( StringUtils.isEmpty(value)){
+                    JedisUtil.me().set("1", String.valueOf(60));
                 }else {
-                    long time = redisString.getTtl();
+                    long time = Long.parseLong(JedisUtil.me().get("tls"));
                     result.setResult(ResultEnum.POST_THOUGHT_FREQUENCY_OVER_LIMIT);
                     result.setMessage("推荐背景图片频率超过限制，请过"+time+"秒再试!");
                     return result;

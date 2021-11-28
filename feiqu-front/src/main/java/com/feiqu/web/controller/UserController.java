@@ -17,10 +17,7 @@ import com.feiqu.common.utils.SpringUtils;
 import com.feiqu.framwork.constant.CommonConstant;
 import com.feiqu.framwork.constant.IconUrlConfig;
 import com.feiqu.framwork.support.cache.CacheManager;
-import com.feiqu.framwork.util.CommonUtils;
-import com.feiqu.framwork.util.CookieUtil;
-import com.feiqu.framwork.util.SpringContextUtil;
-import com.feiqu.framwork.util.WebUtil;
+import com.feiqu.framwork.util.*;
 import com.feiqu.framwork.web.base.BaseController;
 import com.feiqu.system.model.*;
 import com.feiqu.system.pojo.cache.FqUserCache;
@@ -31,11 +28,11 @@ import com.feiqu.system.service.*;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Lists;
-import com.jeesuite.cache.command.RedisString;
-import com.jeesuite.cache.redis.JedisProviderFactory;
 import com.jeesuite.filesystem.FileSystemClient;
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.time.DateFormatUtils;
+
+
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateFormatUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +45,8 @@ import org.springframework.ui.Model;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import redis.clients.jedis.JedisCommands;
+import redis.clients.jedis.Jedis;
+import redis.clients.jedis.commands.JedisCommands;
 
 import javax.annotation.Resource;
 import javax.mail.MessagingException;
@@ -83,7 +81,7 @@ public class UserController extends BaseController {
     private CMessageService messageService;
     @Autowired
     private UploadImgRecordService uploadImgRecordService;
-    @Autowired
+    @Resource
     private JavaMailSenderImpl mailSender;
     @Autowired
     private UserActivateService userActivateService;
@@ -108,7 +106,7 @@ public class UserController extends BaseController {
         FqUserCache fqUserCache = getCurrentUser();
         int month = DateUtil.thisMonth()+1;
         int lastMonth = month == 1? 12 : month-1;
-        JedisCommands commands = JedisProviderFactory.getJedisCommands(null);
+        JedisCommands commands = JedisUtil.me();
         Double score = commands.zscore(CommonConstant.FQ_ACTIVE_USER_SORT+month,fqUserCache.getId().toString());
         Double lastMonthScore = commands.zscore(CommonConstant.FQ_ACTIVE_USER_SORT+lastMonth,fqUserCache.getId().toString());
         Double totolScore = (score == null?0:score)+(lastMonthScore==null?0:lastMonthScore);
@@ -138,7 +136,7 @@ public class UserController extends BaseController {
 
             int month = DateUtil.thisMonth()+1;
             int lastMonth = month == 1? 12 : month-1;
-            JedisCommands commands = JedisProviderFactory.getJedisCommands(null);
+            JedisCommands commands = JedisUtil.me();
             Double score = commands.zscore(CommonConstant.FQ_ACTIVE_USER_SORT+month,fqUserCache.getId().toString());
             Double lastMonthScore = commands.zscore(CommonConstant.FQ_ACTIVE_USER_SORT+lastMonth,fqUserCache.getId().toString());
             Double totolScore = (score == null?0:score)+(lastMonthScore==null?0:lastMonthScore);
@@ -158,7 +156,7 @@ public class UserController extends BaseController {
             result.setResult(ResultEnum.FAIL);
             logger.error("升级报错",e);
         }finally {
-            JedisProviderFactory.getJedisProvider(null).release();
+             
         }
         return result;
     }
@@ -537,7 +535,7 @@ public class UserController extends BaseController {
             UserActivateExample example = new UserActivateExample();
             example.createCriteria().andTokenEqualTo(token);
             UserActivate userActivate = userActivateService.selectFirstByExample(example);
-            if(userActivate != null && userActivate.getUserId() == currUser.getId()){
+            if(userActivate != null && userActivate.getUserId().equals(currUser.getId())){
                 currUser.setIsMailBind(YesNoEnum.YES.getValue());
                 userService.updateByPrimaryKeySelective(currUser.transferFqUser());
                 logger.info("{} 邮箱绑定成功",currUser.getUsername());
@@ -561,7 +559,7 @@ public class UserController extends BaseController {
         UserActivate userActivate = userActivateService.selectFirstByExample(example);
         String htmlContent = "";
         if(userActivate == null){
-            String token = RandomUtil.randomUUID();
+            String token = RandomUtil.randomString(32);
             userActivate = new UserActivate(currUser.getId(),token,new Date());
             userActivateService.insert(userActivate);
             htmlContent = getEmailHtml(currUser.getNickname(),token);
@@ -943,9 +941,9 @@ public class UserController extends BaseController {
             }
             logger.info("用户：{}登进我的小窝",user.getNickname());
             ThoughtWithUser topThought = null;
-            RedisString redisString = new RedisString(CommonConstant.THOUGHT_TOP_LIST);
-            if(org.apache.commons.lang3.StringUtils.isNotEmpty(redisString.get())){
-                topThought = JSON.parseObject(redisString.get(),ThoughtWithUser.class);
+            Jedis jedis=JedisUtil.me();
+            if(org.apache.commons.lang3.StringUtils.isNotEmpty(jedis.get(CommonConstant.THOUGHT_TOP_LIST))){
+                topThought = JSON.parseObject(jedis.get(CommonConstant.THOUGHT_TOP_LIST),ThoughtWithUser.class);
             };
             request.setAttribute("topThought",topThought);
             if (user.getId().equals(uid)) {
@@ -960,7 +958,7 @@ public class UserController extends BaseController {
                 List<ThoughtWithUser> thoughts = thoughtService.getThoughtWithUser(example);
 
                 List<Integer> list = fqCollectService.selectTopicIdsByTypeAndUid(TopicTypeEnum.THOUGHT_TYPE.getValue(),uid);
-                JedisCommands commands = JedisProviderFactory.getJedisCommands(null);
+                JedisCommands commands = JedisUtil.me();
                 if(CollUtil.isNotEmpty(thoughts)){
                     String key = CacheManager.getCollectKey(TopicTypeEnum.THOUGHT_TYPE.name(),uid);
                     long redisCount = commands.scard(key);
@@ -1017,7 +1015,7 @@ public class UserController extends BaseController {
             request.setAttribute(CommonConstant.SYSTEM_ERROR_CODE,"出错了");
             return GENERAL_CUSTOM_ERROR_URL;
         }finally {
-            JedisProviderFactory.getJedisProvider(null).release();
+             
         }
         return "/user/home";
     }

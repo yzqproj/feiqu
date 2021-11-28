@@ -5,19 +5,19 @@ import com.feiqu.common.base.BaseResult;
 import com.feiqu.common.enums.ResultEnum;
 import com.feiqu.framwork.constant.CommonConstant;
 import com.feiqu.framwork.util.CommonUtils;
+import com.feiqu.framwork.util.JedisUtil;
 import com.feiqu.framwork.web.base.BaseController;
 import com.feiqu.system.pojo.response.IpVisitDTO;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import com.jeesuite.cache.redis.JedisProviderFactory;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import redis.clients.jedis.JedisCommands;
 import redis.clients.jedis.Tuple;
+import redis.clients.jedis.commands.JedisCommands;
 
 import java.util.List;
 import java.util.Set;
@@ -39,7 +39,7 @@ public class BlackListController extends BaseController {
     @GetMapping("manage")
     public String manage(Model model, @RequestParam(required = false) String queryDate){
         try {
-            JedisCommands commands = JedisProviderFactory.getJedisCommands(null);
+            JedisCommands commands = JedisUtil.me();
             Set<String> ips =commands.smembers(CommonConstant.FQ_BLACK_LIST_REDIS_KEY);
             model.addAttribute("ips",ips);
             Set<Tuple> tuples = Sets.newHashSet();
@@ -59,7 +59,7 @@ public class BlackListController extends BaseController {
             model.addAttribute("errorMsg","出错了");
             return GENERAL_CUSTOM_ERROR_URL;
         }finally {
-            JedisProviderFactory.getJedisProvider(null).release();;
+             ;
         }
         return "/blackList/manage";
     }
@@ -69,12 +69,12 @@ public class BlackListController extends BaseController {
     public BaseResult manageList(String ip){
         BaseResult result = new BaseResult();
         try {
-            JedisCommands commands = JedisProviderFactory.getJedisCommands(null);
+            JedisCommands commands = JedisUtil.me();
             Long id  =commands.srem(CommonConstant.FQ_BLACK_LIST_REDIS_KEY,ip);
         } catch (Exception e) {
             logger.error("",e);
         }finally {
-            JedisProviderFactory.getJedisProvider(null).release();;
+             ;
         }
         return result;
     }
@@ -89,12 +89,12 @@ public class BlackListController extends BaseController {
                 result.setMessage("IP格式不正确！");
                 return result;
             }
-            JedisCommands commands = JedisProviderFactory.getJedisCommands(null);
+            JedisCommands commands = JedisUtil.me();
             commands.sadd(CommonConstant.FQ_BLACK_LIST_REDIS_KEY,ip);
         } catch (Exception e) {
             logger.error("",e);
         }finally {
-            JedisProviderFactory.getJedisProvider(null).release();;
+             ;
         }
         return result;
     }

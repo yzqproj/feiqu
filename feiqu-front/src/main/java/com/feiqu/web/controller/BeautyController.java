@@ -9,6 +9,7 @@ import com.feiqu.common.enums.*;
 import com.feiqu.common.utils.EmojiUtils;
 import com.feiqu.framwork.constant.CommonConstant;
 import com.feiqu.framwork.util.CommonUtils;
+import com.feiqu.framwork.util.JedisUtil;
 import com.feiqu.framwork.util.WebUtil;
 import com.feiqu.framwork.web.base.BaseController;
 import com.feiqu.system.model.*;
@@ -21,9 +22,7 @@ import com.feiqu.system.service.*;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Lists;
-import com.jeesuite.cache.command.RedisString;
-import com.jeesuite.cache.redis.JedisProviderFactory;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +30,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
-import redis.clients.jedis.JedisCommands;
+import redis.clients.jedis.commands.JedisCommands;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -109,7 +108,7 @@ public class BeautyController extends BaseController {
         BaseResult result = new BaseResult();
         try {
             logger.info("banner新增或者删除图片：{}，类型：{}",JSON.toJSON(beautySim),type);
-            JedisCommands commands = JedisProviderFactory.getJedisCommands(null);
+            JedisCommands commands = JedisUtil.me();
             if("add".equals(type)){
                 boolean exist = CommonConstant.BEAUTY_BANNERS.stream().anyMatch(e->e.getImgUrl().equals(beautySim.getImgUrl()));
                 if(exist){
@@ -130,7 +129,7 @@ public class BeautyController extends BaseController {
             result.setCode("1");
             result.setMessage("加至banner出错");
         } finally {
-            JedisProviderFactory.getJedisProvider(null).release();
+             
         }
         return result;
     }
@@ -379,10 +378,9 @@ public class BeautyController extends BaseController {
             }
 
             String key = "beauty_comment_"+beautyId+"_"+user.getId()+"_"+ip;
-            RedisString redisString = new RedisString(key);
-            String value = redisString.get();
+            String value = JedisUtil.me().get(key);
             if(StringUtils.isEmpty(value)){
-                redisString.set("1", 60);
+               JedisUtil.me().set("1", String.valueOf(60));
             }else {
                 result.setResult(ResultEnum.THOUGHT_COMMENT_FREQUENCY_OVER_LIMIT);
                 result.setMessage("频率超过限制");

@@ -11,6 +11,7 @@ import com.feiqu.common.enums.ResultEnum;
 import com.feiqu.common.enums.YesNoEnum;
 import com.feiqu.framwork.constant.CommonConstant;
 import com.feiqu.framwork.support.cache.CacheManager;
+import com.feiqu.framwork.util.JedisUtil;
 import com.feiqu.framwork.web.base.BaseController;
 import com.feiqu.system.model.FqWebsiteDir;
 import com.feiqu.system.model.FqWebsiteDirExample;
@@ -20,16 +21,15 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.jeesuite.cache.redis.JedisProviderFactory;
-import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import redis.clients.jedis.JedisCommands;
 import redis.clients.jedis.Tuple;
+import redis.clients.jedis.commands.JedisCommands;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -105,7 +105,7 @@ public class FqWebsiteDirController extends BaseController {
             String s = redisTemplate.opsForValue().get("fq-3q");
             logger.info(s);*/
             List<FqWebsiteDir> dirs;
-            JedisCommands commands = JedisProviderFactory.getJedisCommands(null);
+            JedisCommands commands = JedisUtil.me();
             FqUserCache user = getCurrentUser();
             Integer uid = user == null?0:user.getId();
             FqWebsiteDirExample example = new FqWebsiteDirExample();
@@ -179,7 +179,7 @@ public class FqWebsiteDirController extends BaseController {
             model.addAttribute(CommonConstant.GENERAL_CUSTOM_ERROR_CODE,"网址页面报错");
             return GENERAL_CUSTOM_ERROR_URL;
         }finally {
-            JedisProviderFactory.getJedisProvider(null).release();
+             
         }
         return "/websiteDir/index";
     }
@@ -200,7 +200,7 @@ public class FqWebsiteDirController extends BaseController {
                     fqWebsiteDirService.updateByPrimaryKey(fqWebsiteDirDB);
                     if(uid > 0){
                         //记录某个人的点击网站偏好
-                        JedisCommands commands = JedisProviderFactory.getJedisCommands(null);
+                        JedisCommands commands = JedisUtil.me();
                         String key = CommonConstant.FQ_USER_WEBSITE_CLICK_COUNT +":"+uid;
                         Double scoreStore = commands.zscore(key,fqWebsiteDirDB.getId().toString());
                         if(scoreStore == null){
@@ -217,7 +217,7 @@ public class FqWebsiteDirController extends BaseController {
         } catch (Exception e) {
             logger.error("记录点击次数报错",e);
         }finally {
-            JedisProviderFactory.getJedisProvider(null).release();
+             
         }
         return baseResult;
     }

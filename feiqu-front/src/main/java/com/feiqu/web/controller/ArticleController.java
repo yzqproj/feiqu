@@ -8,6 +8,8 @@ import com.feiqu.common.enums.*;
 import com.feiqu.common.utils.EmojiUtils;
 import com.feiqu.framwork.constant.CommonConstant;
 import com.feiqu.framwork.util.CommonUtils;
+import com.feiqu.framwork.util.JedisUtil;
+import com.feiqu.framwork.util.RedisUtil;
 import com.feiqu.framwork.util.WebUtil;
 import com.feiqu.framwork.web.base.BaseController;
 import com.feiqu.system.model.*;
@@ -21,8 +23,7 @@ import com.feiqu.system.service.*;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Maps;
-import com.jeesuite.cache.command.RedisString;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -175,10 +176,9 @@ public class ArticleController extends BaseController {
             }
             String ip = WebUtil.getIP(request);
             String key = "writeArticle_"+article.getId()+"_"+user.getId()+"_"+ip;
-            RedisString redisString = new RedisString(key);
-            String value = redisString.get();
+            String value = JedisUtil.me().get(key);
             if(StringUtils.isEmpty(value)){
-                redisString.set("1", 60);
+                JedisUtil.me().set("1", String.valueOf(60));
             }else {
                 result.setResult(ResultEnum.POST_ARTICLE_FREQUENCY_OVER_LIMIT);
                 return result;

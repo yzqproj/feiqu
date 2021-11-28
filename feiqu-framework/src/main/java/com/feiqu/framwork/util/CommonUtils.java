@@ -21,7 +21,7 @@ import org.lionsoul.ip2region.DataBlock;
 import org.lionsoul.ip2region.DbConfig;
 import org.lionsoul.ip2region.DbMakerConfigException;
 import org.lionsoul.ip2region.DbSearcher;
-import redis.clients.jedis.commands.JedisCommands;
+import redis.clients.jedis.Jedis;
 
 import javax.annotation.Resource;
 import java.io.FileNotFoundException;
@@ -34,7 +34,7 @@ import java.util.regex.Pattern;
  */
 public class CommonUtils {
     @Resource
-    RedisUtils redisUtils;
+    RedisUtil redisUtil;
     private static Log logger = LogFactory.get();
 
     private static DbSearcher searcher = null;
@@ -94,18 +94,18 @@ public class CommonUtils {
         String key = CommonConstant.FQ_ACTIVE_USER_SORT + month;
         try {
 
-            Double scoreStore = commands.zscore(key, userId.toString());
+            Double scoreStore =JedisUtil.me().zscore(key, userId.toString());
             if (scoreStore == null) {
                 scoreStore = score;
             } else {
                 scoreStore += score;
             }
-            commands.zadd(key, scoreStore, userId.toString());
-            commands.expire(key, 180 * 24 * 60 * 60);
+            JedisUtil.me().zadd(key, scoreStore, userId.toString());
+            JedisUtil.me().expire(key, 180 * 24 * 60 * 60L);
         } catch (Exception e) {
             logger.error(e);
         } finally {
-            //JedisProviderFactory.getJedisProvider(null).release();
+            // 
         }
     }
 

@@ -3,7 +3,8 @@ package com.feiqu.generator.util;
 import com.feiqu.common.config.Global;
 import com.google.common.collect.Maps;
 import org.apache.commons.lang.ObjectUtils;
-import org.apache.commons.lang.StringUtils;
+
+import org.apache.commons.lang3.StringUtils;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 import org.mybatis.generator.api.MyBatisGenerator;

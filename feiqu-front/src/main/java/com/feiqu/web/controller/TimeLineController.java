@@ -11,8 +11,9 @@ import com.feiqu.system.service.UserTimeLineService;
 import com.feiqu.framwork.util.WebUtil;
 import com.google.common.collect.Maps;
 import cn.hutool.core.date.DateUtil;
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.time.DateUtils;
+ 
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -74,11 +75,9 @@ public class TimeLineController extends BaseController {
         example.setOrderByClause("create_time desc");
         example.createCriteria().andUserIdEqualTo(user.getId()).andCreateTimeGreaterThan(DateUtil.beginOfYear(new Date()));
         List<UserTimeLine> lines = timeLineService.selectByExample(example);
-        Map<String, List<UserTimeLine>> map = Maps.newTreeMap(new Comparator<String>() {
-            public int compare(String obj1, String obj2) {
-                // 降序排序
-                return obj2.compareTo(obj1);
-            }
+        Map<String, List<UserTimeLine>> map = Maps.newTreeMap((obj1, obj2) -> {
+            // 降序排序
+            return obj2.compareTo(obj1);
         });
         for (UserTimeLine line : lines) {
             String yearMonth = DateUtil.format(line.getCreateTime(), "yyyy-MM");

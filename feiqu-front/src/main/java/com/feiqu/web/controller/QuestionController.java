@@ -8,7 +8,8 @@ import com.feiqu.system.model.QuestionExample;
 import com.feiqu.system.pojo.cache.FqUserCache;
 import com.feiqu.system.service.QuestionService;
 import com.feiqu.framwork.util.WebUtil;
-import org.apache.commons.lang.StringUtils;
+
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

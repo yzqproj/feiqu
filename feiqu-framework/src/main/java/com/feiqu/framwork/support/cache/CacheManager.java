@@ -3,26 +3,24 @@ package com.feiqu.framwork.support.cache;
 import com.alibaba.fastjson.JSON;
 import com.feiqu.common.utils.SpringUtils;
 import com.feiqu.framwork.constant.CommonConstant;
-import com.feiqu.framwork.util.RedisUtils;
+import com.feiqu.framwork.util.JedisUtil;
+import com.feiqu.framwork.util.RedisStaticUtil;
+import com.feiqu.framwork.util.RedisUtil;
 import com.feiqu.system.model.FqUser;
 import com.feiqu.system.pojo.cache.FqUserCache;
 import com.feiqu.system.service.FqUserService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
-import redis.clients.jedis.commands.JedisCommands;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 /**
  * Created by Administrator on 2017/11/11.
  */
-@Component
+
 public class CacheManager {
-    @Resource
-     RedisUtils redisUtils;
+
     private static Logger logger = LoggerFactory.getLogger(CacheManager.class);
 
     /*public static //缓存接口这里是LoadingCache，LoadingCache在缓存项不存在时可以自动加载缓存
@@ -72,7 +70,7 @@ public class CacheManager {
         FqUserCache fqUserCache = null;
         try {
             String cacheKey = "FqUser.id:" + userId;
-            String userCacheStr = redisUtils.get(cacheKey);
+            String userCacheStr = (String) RedisStaticUtil.get(cacheKey);
             if (StringUtils.isEmpty(userCacheStr)) {
                 FqUserService fqUserService = SpringUtils.getBean("fqUserServiceImpl");
                 FqUser fqUser = fqUserService.selectByPrimaryKey(userId);
@@ -80,8 +78,8 @@ public class CacheManager {
                     return null;
                 }
                 fqUserCache = new FqUserCache(fqUser);
-                commands.set(cacheKey, JSON.toJSONString(fqUserCache));
-                commands.expire(cacheKey, 300);
+                RedisStaticUtil.set(cacheKey, JSON.toJSONString(fqUserCache));
+               RedisStaticUtil.expire(cacheKey, 300);
                 return fqUserCache;
             } else {
                 fqUserCache = JSON.parseObject(userCacheStr, FqUserCache.class);
@@ -90,7 +88,7 @@ public class CacheManager {
         } catch (Exception e) {
             logger.error("", e);
         } finally {
-            JedisProviderFactory.getJedisProvider(null).release();
+            // 
         }
         return fqUserCache;
 
@@ -130,16 +128,14 @@ public class CacheManager {
     public static void refreshUserCacheByUid(Integer userId) {
         String cacheKey = "FqUser.id:" + userId;
         try {
-            JedisCommands commands = JedisProviderFactory.getJedisCommands(null);
             FqUserService fqUserService = SpringUtils.getBean("fqUserServiceImpl");
             FqUser fqUser = fqUserService.selectByPrimaryKey(userId);
             FqUserCache fqUserCache = new FqUserCache(fqUser);
-            commands.set(cacheKey, JSON.toJSONString(fqUserCache));
-            commands.expire(cacheKey, 300);
+         RedisStaticUtil.set(cacheKey, JSON.toJSONString(fqUserCache));
+            RedisStaticUtil.expire(cacheKey, 300);
         } catch (Exception e) {
             logger.error("refreshUserCacheByUid", e);
         } finally {
-            JedisProviderFactory.getJedisProvider(null).release();
         }
     }
 
@@ -148,46 +144,38 @@ public class CacheManager {
     }
 
     public static boolean isCollect(String type, Integer uid, Integer thoughtId) {
-        JedisCommands commands = JedisProviderFactory.getJedisCommands(null);
         try {
             String key = getCollectKey(type, uid);
-            return commands.sismember(key, thoughtId.toString());
+            return JedisUtil.me().sismember(key, thoughtId.toString());
         } finally {
-            JedisProviderFactory.getJedisProvider(null).release();
         }
     }
 
     public static void addCollect(String type, Integer uid, Integer thoughtId) {
-        JedisCommands commands = JedisProviderFactory.getJedisCommands(null);
         try {
             String key = getCollectKey(type, uid);
-            commands.sadd(key, thoughtId.toString());
-            commands.expire(key, 24 * 60 * 60);
+            RedisStaticUtil.set(key, thoughtId.toString());
+           RedisStaticUtil.expire(key, 24 * 60 * 60);
         } finally {
-            JedisProviderFactory.getJedisProvider(null).release();
         }
     }
 
     public static void removeCollect(String type, Integer uid, Integer thoughtId) {
-        JedisCommands commands = JedisProviderFactory.getJedisCommands(null);
         try {
             String key = getCollectKey(type, uid);
-            commands.srem(key, thoughtId.toString());
+           JedisUtil.me().srem(key, thoughtId.toString());
         } finally {
-            JedisProviderFactory.getJedisProvider(null).release();
         }
     }
 
     public static void refreshCollect(String type, Integer uid, List<Integer> list) {
-        JedisCommands commands = JedisProviderFactory.getJedisCommands(null);
         try {
             String key = getCollectKey(type, uid);
             for (Integer tid : list) {
-                commands.sadd(key, tid.toString());
+                RedisStaticUtil.set(key, tid.toString());
             }
-            commands.expire(key, 24 * 60 * 60);
+            RedisStaticUtil.expire(key, 24 * 60 * 60);
         } finally {
-            JedisProviderFactory.getJedisProvider(null).release();
         }
     }
 
@@ -201,11 +189,9 @@ public class CacheManager {
 
 
     public static void refreshWebsiteCache() {
-        JedisCommands commands = JedisProviderFactory.getJedisCommands(null);
         try {
-            commands.del(CommonConstant.FQ_WEBSITE_ALL);
+          RedisStaticUtil.del(CommonConstant.FQ_WEBSITE_ALL);
         } finally {
-            JedisProviderFactory.getJedisProvider(null).release();
         }
     }
 }

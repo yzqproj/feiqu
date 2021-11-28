@@ -179,9 +179,9 @@ public class ApiDocInterfaceController extends BaseController {
             String interfaceMethod = apiDocInterface.getMethod();
             HttpResponse httpResponse = null;
             if(Method.POST.name().equals(interfaceMethod)){
-                httpResponse = httpRequest.method(Method.POST).body(jsonObject).execute();
+                httpResponse = httpRequest.method(Method.POST).body(String.valueOf(jsonObject)).execute();
             }else if(Method.GET.name().equals(interfaceMethod)){
-                httpResponse = httpRequest.method(Method.GET).body(jsonObject).execute();
+                httpResponse = httpRequest.method(Method.GET).body(String.valueOf(jsonObject)).execute();
             }
 
             String reponseStr = httpResponse.toString();

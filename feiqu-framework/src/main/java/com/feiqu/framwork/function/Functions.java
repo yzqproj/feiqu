@@ -1,18 +1,9 @@
 package com.feiqu.framwork.function;
 
-import com.feiqu.common.enums.YesNoEnum;
-import com.feiqu.common.utils.SpringUtils;
-import com.feiqu.framwork.support.cache.CacheManager;
 import com.feiqu.framwork.util.WebUtil;
-import com.feiqu.system.model.FqBackgroundImg;
-import com.feiqu.system.model.FqBackgroundImgExample;
 import com.feiqu.system.pojo.cache.FqUserCache;
-import com.feiqu.system.service.FqBackgroundImgService;
-import com.jeesuite.cache.redis.JedisProviderFactory;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import redis.clients.jedis.commands.JedisCommands;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -57,7 +48,7 @@ public class Functions {
 //
 //    public String currentBgImgUrl(int uid){
 //        if(uid <= 0){return "";}
-//        JedisCommands commands = JedisProviderFactory.getJedisCommands(null);
+//        JedisCommands commands = JedisUtil.me();
 //        try {
 //            String key = CacheManager.getUserBackImgKey(uid);
 //            String picUrl = commands.get(key);
@@ -78,7 +69,7 @@ public class Functions {
 //                return picUrl;
 //            }
 //        } finally{
-//            JedisProviderFactory.getJedisProvider(null).release();
+//             
 //        }
 ////        return CommonConstant.bgImgUrl;
 //    }

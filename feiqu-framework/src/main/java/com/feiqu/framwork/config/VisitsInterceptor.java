@@ -1,7 +1,8 @@
 package com.feiqu.framwork.config;
 
 import com.feiqu.framwork.constant.CommonConstant;
-import com.feiqu.framwork.util.RedisUtils;
+import com.feiqu.framwork.util.JedisUtil;
+import com.feiqu.framwork.util.RedisUtil;
 import com.feiqu.framwork.util.WebUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 @Component
 public class VisitsInterceptor implements HandlerInterceptor {
     @Resource
-    RedisUtils redisUtils;
+    RedisUtil redisUtil;
     private static Logger logger = LoggerFactory.getLogger(WebMvcConfig.class);
 
     @Override
@@ -31,7 +32,7 @@ public class VisitsInterceptor implements HandlerInterceptor {
         if (null == request.getHeader("X-Requested-With") || !request.getHeader("X-Requested-With").equalsIgnoreCase("XMLHttpRequest")) {
             try {
                 String ip = WebUtil.getIP(request);
-                JedisCommands commands = JedisProviderFactory.getJedisCommands(null);
+                JedisCommands commands = JedisUtil.me();
                 boolean isBlackIp = commands.sismember(CommonConstant.FQ_BLACK_LIST_REDIS_KEY, ip);
                 if (isBlackIp) {
                     logger.info("该ip:{} 存在于黑名单，禁止其访问！", ip);
@@ -46,9 +47,8 @@ public class VisitsInterceptor implements HandlerInterceptor {
                 } else {
                     commands.zadd(clickkey, score + 1, ip);
                 }
-                commands.expire(clickkey, 30 * 24 * 60 * 60);//存放一个月
+                commands.expire(clickkey, 30 * 24 * 60 * 60L);//存放一个月
             } finally {
-                JedisProviderFactory.getJedisProvider(null).release();
             }
         }
         return true;
