@@ -1,8 +1,18 @@
 package com.feiqu.quartz.model;
 
+import lombok.Data;
+
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * 系统的工作日志
+ *
+ * @author yanni
+ * @date 2021/11/28
+ */
+@Data
 public class SysJobLog implements Serializable {
     /**
      * 任务日志ID
@@ -67,99 +77,12 @@ public class SysJobLog implements Serializable {
      */
     private Date createTime;
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
-    public Integer getJobLogId() {
-        return jobLogId;
-    }
-
-    public void setJobLogId(Integer jobLogId) {
-        this.jobLogId = jobLogId;
-    }
-
-    public String getJobName() {
-        return jobName;
-    }
-
-    public void setJobName(String jobName) {
-        this.jobName = jobName;
-    }
-
-    public String getJobGroup() {
-        return jobGroup;
-    }
-
-    public void setJobGroup(String jobGroup) {
-        this.jobGroup = jobGroup;
-    }
-
-    public String getMethodName() {
-        return methodName;
-    }
-
-    public void setMethodName(String methodName) {
-        this.methodName = methodName;
-    }
-
-    public String getMethodParams() {
-        return methodParams;
-    }
-
-    public void setMethodParams(String methodParams) {
-        this.methodParams = methodParams;
-    }
-
-    public String getJobMessage() {
-        return jobMessage;
-    }
-
-    public void setJobMessage(String jobMessage) {
-        this.jobMessage = jobMessage;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getExceptionInfo() {
-        return exceptionInfo;
-    }
-
-    public void setExceptionInfo(String exceptionInfo) {
-        this.exceptionInfo = exceptionInfo;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
 
 
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", jobLogId=").append(jobLogId);
-        sb.append(", jobName=").append(jobName);
-        sb.append(", jobGroup=").append(jobGroup);
-        sb.append(", methodName=").append(methodName);
-        sb.append(", methodParams=").append(methodParams);
-        sb.append(", jobMessage=").append(jobMessage);
-        sb.append(", status=").append(status);
-        sb.append(", exceptionInfo=").append(exceptionInfo);
-        sb.append(", createTime=").append(createTime);
-        sb.append("]");
-        return sb.toString();
-    }
+
 
     @Override
     public boolean equals(Object that) {

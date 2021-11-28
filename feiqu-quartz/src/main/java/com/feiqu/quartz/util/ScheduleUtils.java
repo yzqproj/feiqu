@@ -4,17 +4,16 @@ package com.feiqu.quartz.util;
 import com.feiqu.common.constant.ScheduleConstants;
 import com.feiqu.common.exception.job.TaskException;
 import com.feiqu.quartz.model.SysJob;
+import lombok.extern.slf4j.Slf4j;
 import org.quartz.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * 定时任务工具类
  *
  * @author ruoyi
  */
+@Slf4j
 public class ScheduleUtils {
-    private static final Logger log = LoggerFactory.getLogger(ScheduleUtils.class);
 
     /**
      * 得到quartz任务类

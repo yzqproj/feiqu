@@ -1,8 +1,18 @@
 package com.feiqu.quartz.model;
 
+import lombok.Data;
+
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * 系统的工作
+ *
+ * @author yanni
+ * @date 2021/11/28
+ */
+@Data
 public class SysJob implements Serializable {
     /**
      * 任务ID
@@ -102,143 +112,9 @@ public class SysJob implements Serializable {
      */
     private String concurrent;
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
-    public Integer getJobId() {
-        return jobId;
-    }
-
-    public void setJobId(Integer jobId) {
-        this.jobId = jobId;
-    }
-
-    public String getJobName() {
-        return jobName;
-    }
-
-    public void setJobName(String jobName) {
-        this.jobName = jobName;
-    }
-
-    public String getJobGroup() {
-        return jobGroup;
-    }
-
-    public void setJobGroup(String jobGroup) {
-        this.jobGroup = jobGroup;
-    }
-
-    public String getMethodName() {
-        return methodName;
-    }
-
-    public void setMethodName(String methodName) {
-        this.methodName = methodName;
-    }
-
-    public String getMethodParams() {
-        return methodParams;
-    }
-
-    public void setMethodParams(String methodParams) {
-        this.methodParams = methodParams;
-    }
-
-    public String getCronExpression() {
-        return cronExpression;
-    }
-
-    public void setCronExpression(String cronExpression) {
-        this.cronExpression = cronExpression;
-    }
-
-    public String getMisfirePolicy() {
-        return misfirePolicy;
-    }
-
-    public void setMisfirePolicy(String misfirePolicy) {
-        this.misfirePolicy = misfirePolicy;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getCreateBy() {
-        return createBy;
-    }
-
-    public void setCreateBy(String createBy) {
-        this.createBy = createBy;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public String getUpdateBy() {
-        return updateBy;
-    }
-
-    public void setUpdateBy(String updateBy) {
-        this.updateBy = updateBy;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
-    }
-
-    public String getConcurrent() {
-        return concurrent;
-    }
-
-    public void setConcurrent(String concurrent) {
-        this.concurrent = concurrent;
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", jobId=").append(jobId);
-        sb.append(", jobName=").append(jobName);
-        sb.append(", jobGroup=").append(jobGroup);
-        sb.append(", methodName=").append(methodName);
-        sb.append(", methodParams=").append(methodParams);
-        sb.append(", cronExpression=").append(cronExpression);
-        sb.append(", misfirePolicy=").append(misfirePolicy);
-        sb.append(", status=").append(status);
-        sb.append(", createBy=").append(createBy);
-        sb.append(", createTime=").append(createTime);
-        sb.append(", updateBy=").append(updateBy);
-        sb.append(", updateTime=").append(updateTime);
-        sb.append(", remark=").append(remark);
-        sb.append(", concurrent=").append(concurrent);
-        sb.append("]");
-        return sb.toString();
-    }
 
     @Override
     public boolean equals(Object that) {

@@ -583,11 +583,7 @@ public class UserController extends BaseController {
         }
 
         ThreadPoolTaskExecutor executor = (ThreadPoolTaskExecutor) SpringContextUtil.getBean("threadPoolTaskExecutor");
-        executor.execute(new Runnable() {
-            public void run() {
-                mailSender.send(mimeMessage);
-            }
-        });
+        executor.execute(() -> mailSender.send(mimeMessage));
         return result;
     }
 
@@ -966,7 +962,7 @@ public class UserController extends BaseController {
                         for(Integer tid : list){
                             commands.sadd(key, tid.toString());
                         }
-                        commands.expire(key,24*60*60);
+                        commands.expire(key,24*60*60L);
                     }
                     for(ThoughtWithUser thoughtWithUser : thoughts){
                         if(StringUtils.isNotEmpty(thoughtWithUser.getPicList())){
@@ -990,7 +986,7 @@ public class UserController extends BaseController {
                     followExample.createCriteria().andFollowerUserIdEqualTo(uid).andDelFlagEqualTo(YesNoEnum.NO.getValue());
                     followCount = userFollowService.countByExample(followExample);
                     commands.set(followKey,fansCount+"|"+followCount);
-                    commands.expire(followKey, 24*60*60);
+                    commands.expire(followKey, 24*60*60L);
                 }else {
                     String[] ff = followStr.split("\\|");
                     fansCount = Integer.valueOf(ff[0]);

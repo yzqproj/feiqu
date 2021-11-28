@@ -6,6 +6,7 @@ import com.feiqu.framwork.util.SpringContextUtil;
 import com.feiqu.framwork.util.StringEscapeEditor;
 import com.feiqu.framwork.util.WebUtil;
 import com.feiqu.system.pojo.cache.FqUserCache;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.ServletRequestDataBinder;
@@ -22,8 +23,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author ruoyi
  */
+@Slf4j
 public class BaseController {
-    private final static Logger _log = LoggerFactory.getLogger(BaseController.class);
 
     protected static final String USER_LOGIN_REDIRECT_URL = "redirect:/u/login";
     protected static final String GENERAL_ERROR_URL = "/error";
@@ -40,7 +41,7 @@ public class BaseController {
      */
     @ExceptionHandler({Exception.class})
     public String exceptionHandler(HttpServletRequest request, HttpServletResponse response, Exception exception) {
-        _log.error("统一异常记录：", exception);
+         log.error("统一异常记录：", exception);
         /*request.setAttribute("ex", exception);
         if (null != request.getHeader("X-Requested-With") && request.getHeader("X-Requested-With").equalsIgnoreCase("XMLHttpRequest")) {
             request.setAttribute("requestHeader", "ajax");

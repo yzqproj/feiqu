@@ -32,11 +32,10 @@ import com.google.common.base.Stopwatch;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.jeesuite.filesystem.FileSystemClient;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
@@ -60,8 +59,8 @@ import java.util.regex.Pattern;
  * @author ruoyi
  */
 @Component("fqTask")
+@Slf4j
 public class FqTask {
-    private static Logger logger = LoggerFactory.getLogger(FqTask.class);
 
     @Resource
     private NginxLogService logService;
@@ -167,13 +166,13 @@ public class FqTask {
                 CommonConstant.FQ_ACTIVE_USER_LIST = responses;
             }
         } catch (Exception e) {
-            logger.error("", e);
+            log.error("", e);
         }
 
 
         stopwatch.stop();
         long seconds = stopwatch.elapsed(TimeUnit.SECONDS);
-        logger.info("热门文章以及通知以及热门图片更新完毕,耗时{}秒", seconds);
+        log.info("热门文章以及通知以及热门图片更新完毕,耗时{}秒", seconds);
     }
 
     //每3个小时更新一次 3-》2
@@ -193,14 +192,14 @@ public class FqTask {
 
             while (loopIndex <= loopCount) {
                 String realUrl = url + loopSize * loopIndex + suffix;
-                logger.info(realUrl);
+                log.info(realUrl);
                 result = HttpClientUtil.getWebPage(realUrl);
                 int index = result.indexOf(":");
                 result = result.substring(index + 1, result.lastIndexOf("]") + 1);
 
                 List<NewsResponse> newsResponseList = JSON.parseArray(result, NewsResponse.class);
                 if (CollectionUtils.isEmpty(newsResponseList)) {
-                    logger.info(result);
+                    log.info(result);
                     filterNum += 10;
                     continue;
                 }
@@ -221,7 +220,7 @@ public class FqTask {
                         filterNum += 1;
                         continue;
                     }
-                    logger.info("新闻下面的url：" + newsResponse.getUrl());
+                    log.info("新闻下面的url：" + newsResponse.getUrl());
                     fqNewsExample.clear();
                     fqNewsExample.createCriteria().andTitleEqualTo(newsResponse.getTitle());
                     int count = fqNewsService.countByExample(fqNewsExample);
@@ -234,7 +233,7 @@ public class FqTask {
                     try {
                         result2 = HttpClientUtil.getWebPage(newsResponse.getUrl());
                     } catch (Exception e) {
-                        logger.error("详情报错：" + newsResponse.getUrl(), e);
+                        log.error("详情报错：" + newsResponse.getUrl(), e);
                         filterNum += 1;
                         continue;
                     }
@@ -258,11 +257,11 @@ public class FqTask {
                 loopIndex++;
             }
         } catch (Exception e) {
-            logger.error("新闻更新报错", e);
+            log.error("新闻更新报错", e);
         }
         stopwatch.stop();
         long seconds = stopwatch.elapsed(TimeUnit.SECONDS);
-        logger.info("过滤掉的新闻条数：{}，过滤掉相同标题的新闻条数：{}，插入新闻条数：{}，新闻更新完毕,耗时{}秒", filterNum, sameTitleNum, insertNum, seconds);
+        log.info("过滤掉的新闻条数：{}，过滤掉相同标题的新闻条数：{}，插入新闻条数：{}，新闻更新完毕,耗时{}秒", filterNum, sameTitleNum, insertNum, seconds);
     }
 
     //爬虫
@@ -283,10 +282,10 @@ public class FqTask {
             result = fqTopicService.deleteByExample(example);
             stopwatch.stop();
         } catch (Exception e) {
-            logger.error("爬虫出错", e);
+            log.error("爬虫出错", e);
         }
         long seconds = stopwatch.elapsed(TimeUnit.SECONDS);
-        logger.info("爬虫数据更新完毕,耗时{}秒,删除数据：{}", seconds,result);
+        log.info("爬虫数据更新完毕,耗时{}秒,删除数据：{}", seconds,result);
     }
 
     public void sendLogEmail() {
@@ -352,7 +351,7 @@ public class FqTask {
             }
             mailSender.send(mimeMessage);
         } catch (Exception e) {
-            logger.error("发送邮件失败 ", e);
+            log.error("发送邮件失败 ", e);
         } finally {
             String yesterday2 = DateUtil.offsetDay(new Date(), -7).toString("yyyy-MM-dd");
             File logFile2 = new File(prefix + "/feiqu-info-"+yesterday2+".log");
@@ -360,13 +359,13 @@ public class FqTask {
             if (logFile2.exists()) {
                 boolean del = logFile2.delete();
                 if (!del) {
-                    logger.error("删除日志文件失败，{}", logFile2.getPath());
+                    log.error("删除日志文件失败，{}", logFile2.getPath());
                 }
             }
             if (logFile3.exists()) {
                 boolean del = logFile3.delete();
                 if (!del) {
-                    logger.error("删除日志文件失败，{}", logFile3.getPath());
+                    log.error("删除日志文件失败，{}", logFile3.getPath());
                 }
             }
             if (gcLogFile.exists()) {
@@ -376,7 +375,7 @@ public class FqTask {
         }
         stopwatch.stop();
         long seconds = stopwatch.elapsed(TimeUnit.SECONDS);
-        logger.info("nginx日志分析发送邮件,耗时{}秒", seconds);
+        log.info("nginx日志分析发送邮件,耗时{}秒", seconds);
     }
 
     private String getEmailHtml(String time, long pv, long uv, long baiduzhizhu, long googlezhizhu, long bingzhizhu, long sougouzhizhu) {
@@ -455,7 +454,7 @@ public class FqTask {
                         example.createCriteria().andUserIdEqualTo(userIdList.get(i)).andGmtCreateBetween(DateUtil.beginOfMonth(now).toJdkDate(), tbegin.toJdkDate());
                         FqUserActiveNum yesactive = fqUserActiveNumService.selectFirstByExample(example);
                         if (yesactive == null) {
-                            logger.info("没查到数据,用户：{}",userIdList.get(i));
+                            log.info("没查到数据,用户：{}",userIdList.get(i));
                             yesactive = new FqUserActiveNum();
                             yesactive.setGmtCreate(now);
                             yesactive.setActiveNum(score == null ? 0 : score.intValue());
@@ -465,7 +464,7 @@ public class FqTask {
                         } else {
                             if (yesactive.getActiveNum() != score.intValue()) {
                                 //如果昨天的和今天的数据不一样 进行插入
-                                logger.info("昨天之前的和今天的数据不一样,用户：{}",userIdList.get(i));
+                                log.info("昨天之前的和今天的数据不一样,用户：{}",userIdList.get(i));
                                 yesactive = new FqUserActiveNum();
                                 yesactive.setGmtCreate(now);
                                 yesactive.setActiveNum(score.intValue());
@@ -479,7 +478,7 @@ public class FqTask {
                 }
             }
         } catch (Exception e) {
-            logger.error("活跃度计算出错！", e);
+            log.error("活跃度计算出错！", e);
         } finally {
 
         }
@@ -565,15 +564,15 @@ public class FqTask {
                 http = http.replaceAll("\"", "");
                 referer = referer.replaceAll("\"", "");
                 if (referer.length() > 250) {
-                    logger.info("refer:{} 长度太长 无法存入数据库,准备进行截取", referer);
+                    log.info("refer:{} 长度太长 无法存入数据库,准备进行截取", referer);
                     referer = StringUtils.substring(referer, 0, 250);
                 }
                 if (url.length() > 250) {
-                    logger.info("url:{} 长度太长 无法存入数据库,准备进行截取", url);
+                    log.info("url:{} 长度太长 无法存入数据库,准备进行截取", url);
                     url = StringUtils.substring(url, 0, 250);
                 }
                 if (method.length() > 250) {
-                    logger.info("method:{} 长度太长 无法存入数据库,准备进行截取", method);
+                    log.info("method:{} 长度太长 无法存入数据库,准备进行截取", method);
                     method = StringUtils.substring(method, 0, 250);
                 }
                 Double requestTimeDouble = 0d;
@@ -582,7 +581,7 @@ public class FqTask {
                 } catch (NumberFormatException e) {
                 }
                 if (userAgent.length() > 254) {
-                    logger.info("userAgent:{} 长度太长 无法存入数据库,准备进行截取", userAgent.toString());
+                    log.info("userAgent:{} 长度太长 无法存入数据库,准备进行截取", userAgent.toString());
                     userAgent.delete(254, userAgent.length());
                 }
                 NginxLog log = new NginxLog(ip, localTime, method, url, http, status, bytes, referer, xforward,
@@ -617,13 +616,13 @@ public class FqTask {
             commands.set(CommonConstant.SEVEN_DAYS_HOT_THOUGHT_LIST, JSON.toJSONString(simThoughtDTOS));
             commands.expire(CommonConstant.SEVEN_DAYS_HOT_THOUGHT_LIST, 2 * 24 * 60 * 60);
         } catch (Exception e) {
-            logger.error("nginx日志分析报错", e);
+            log.error("nginx日志分析报错", e);
         } finally {
              
         }
         stopwatch.stop();
         long seconds = stopwatch.elapsed(TimeUnit.SECONDS);
-        logger.info("nginx日志分析完毕,耗时{}秒", seconds);
+        log.info("nginx日志分析完毕,耗时{}秒", seconds);
     }
 
     public void articleGernerate() {
@@ -679,7 +678,7 @@ public class FqTask {
                 try {
                     articleService.insert(article);
                 } catch (Exception e) {
-                    logger.error("生成文章报错，文章详情：" + article.toString(), e);
+                    log.error("生成文章报错，文章详情：" + article.toString(), e);
                     fileSingle.delete();
                     continue;
                 }
@@ -690,7 +689,7 @@ public class FqTask {
                 index++;
             }
         } catch (Exception e) {
-            logger.error("生成文章报错", e);
+            log.error("生成文章报错", e);
         }
     }
 
@@ -700,7 +699,7 @@ public class FqTask {
         if(!rootFile.exists()){
             throw new TaskException("文件夹不存在,本机ip："+ SystemUtil.getHostInfo().getAddress(),TaskException.Code.UNKNOWN);
         }
-        logger.info("rootFile文件名：{},能否被读：{}", rootFile.getName(), rootFile.canRead());
+        log.info("rootFile文件名：{},能否被读：{}", rootFile.getName(), rootFile.canRead());
         File[] categoryFiles = rootFile.listFiles();
         long currentTimeMillis = System.currentTimeMillis();
         String picLog = "";
@@ -708,14 +707,14 @@ public class FqTask {
             Date now = new Date();
             for (File categoryFile : categoryFiles) {
                 boolean insertPic = false;
-                logger.info("文件名：{},能否被读：{}", categoryFile.getName(), categoryFile.canRead());
+                log.info("文件名：{},能否被读：{}", categoryFile.getName(), categoryFile.canRead());
                 File[] files = categoryFile.listFiles();
                 if (files == null || files.length == 0) {
                     categoryFile.delete();
                     continue;
                 }
                 for (File file : files) {
-                    logger.info("3文件名：{},能否被读：{}", file.getName(), file.canRead());
+                    log.info("3文件名：{},能否被读：{}", file.getName(), file.canRead());
                     File[] imgs = file.listFiles();
                     if (imgs != null && imgs.length > 0) {
                         String imgUrl = "";
@@ -731,7 +730,7 @@ public class FqTask {
                             try {
                                 picUrl = FileSystemClient.getPublicClient().upload(CommonConstant.FILE_NAME_PREFIX + currentTimeMillis + ".jpg", img);
                             } catch (Exception e) {
-                                logger.error("上传图片出错，图片名：" + imgName, e);
+                                log.error("上传图片出错，图片名：" + imgName, e);
                                 boolean delete = img.delete();
                                 continue;
                             }
@@ -741,7 +740,7 @@ public class FqTask {
                             imgUrl = picUrl;
                             title = imgName;
                             boolean delete = img.delete();
-                            logger.info("img文件名：{}，是否删除成功：{}", imgName, delete);
+                            log.info("img文件名：{}，是否删除成功：{}", imgName, delete);
                             currentTimeMillis++;
                         }
                         if (StringUtils.isEmpty(title)) {
@@ -769,7 +768,7 @@ public class FqTask {
                 }
             }
         }
-        logger.info(picLog);
+        log.info(picLog);
     }
 
     //新用户记录
@@ -803,11 +802,11 @@ public class FqTask {
             CommonConstant.bgImgUrl = fqBackgroundImg == null ? "https://img.t.sinajs.cn/t6/skin/skinvip805/images/body_bg.jpg?id=1410943047113" : fqBackgroundImg.getImgUrl();
         }
         catch (Exception e) {
-            logger.error("新用户以及友链更新、插入图片报错", e);
+            log.error("新用户以及友链更新、插入图片报错", e);
         }
         stopwatch.stop();
         long seconds = stopwatch.elapsed(TimeUnit.SECONDS);
-        logger.info("新用户以及友链更新完毕,完成插入图片，耗时{}秒,图片详情：{}", seconds, picLog);
+        log.info("新用户以及友链更新完毕,完成插入图片，耗时{}秒,图片详情：{}", seconds, picLog);
     }
 
 }

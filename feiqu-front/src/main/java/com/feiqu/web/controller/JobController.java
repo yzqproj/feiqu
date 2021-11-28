@@ -41,7 +41,6 @@ import java.util.regex.Pattern;
 @RequestMapping("job")
 public class JobController extends BaseController {
 
-    private final static Logger _log = LoggerFactory.getLogger(JobController.class);
 
     @Resource
     private JobTalkService jobTalkService;
