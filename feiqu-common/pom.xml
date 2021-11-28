@@ -15,9 +15,7 @@
     </description>
 
     <properties>
-        <jsoup.version>1.11.3</jsoup.version>
-        <poi.version>3.17</poi.version>
-        <jeesuite.version>1.2.0</jeesuite.version>
+
     </properties>
 
     <dependencies>
@@ -61,14 +59,12 @@
         <dependency>
             <groupId>org.jsoup</groupId>
             <artifactId>jsoup</artifactId>
-            <version>${jsoup.version}</version>
         </dependency>
 
         <!-- excel工具 -->
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi-ooxml</artifactId>
-            <version>${poi.version}</version>
         </dependency>
 
         <!-- yml解析器 -->
@@ -81,14 +77,12 @@
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>23.3-jre</version>
         </dependency>
 
         <!-- fastjson -->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
-            <version>1.2.28</version>
         </dependency>
 
 
@@ -96,7 +90,6 @@
         <dependency>
             <groupId>us.codecraft</groupId>
             <artifactId>webmagic-core</artifactId>
-            <version>0.7.3</version>
             <exclusions>
                 <exclusion>
                     <groupId>commons-collections</groupId>
@@ -115,7 +108,6 @@
         <dependency>
             <groupId>us.codecraft</groupId>
             <artifactId>webmagic-extension</artifactId>
-            <version>0.7.3</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.slf4j</groupId>
@@ -128,7 +120,6 @@
         <dependency>
             <groupId>com.vdurmont</groupId>
             <artifactId>emoji-java</artifactId>
-            <version>4.0.0</version>
         </dependency>
 
         <dependency>
@@ -147,14 +138,12 @@
         <dependency>
             <groupId>net.coobird</groupId>
             <artifactId>thumbnailator</artifactId>
-            <version>0.4.8</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.objenesis/objenesis -->
         <dependency>
             <groupId>org.objenesis</groupId>
             <artifactId>objenesis</artifactId>
-            <version>2.6</version>
         </dependency>
 
     </dependencies>

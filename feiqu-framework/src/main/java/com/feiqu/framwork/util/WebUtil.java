@@ -7,10 +7,11 @@ import com.feiqu.framwork.support.cache.CacheManager;
 import com.feiqu.system.model.FqUser;
 import com.feiqu.system.pojo.cache.FqUserCache;
 import com.feiqu.system.service.FqUserService;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 @Service(value = "webUtil")
 public class WebUtil {
 
-    @Autowired
+    @Resource
     private FqUserService userService;
 
     public FqUserCache currentUser(HttpServletRequest request, HttpServletResponse response) {

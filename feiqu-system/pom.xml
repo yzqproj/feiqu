@@ -12,7 +12,6 @@
     <artifactId>feiqu-system</artifactId>
 
     <properties>
-        <pagehelper.boot.version>1.2.5</pagehelper.boot.version>
     </properties>
 
     <description>
@@ -24,14 +23,12 @@
         <dependency>
             <groupId>com.cwd</groupId>
             <artifactId>feiqu-common</artifactId>
-            <version>${feiqu.version}</version>
         </dependency>
 
         <!-- pagehelper 分页插件 -->
         <dependency>
             <groupId>com.github.pagehelper</groupId>
             <artifactId>pagehelper-spring-boot-starter</artifactId>
-            <version>${pagehelper.boot.version}</version>
         </dependency>
     </dependencies>
 

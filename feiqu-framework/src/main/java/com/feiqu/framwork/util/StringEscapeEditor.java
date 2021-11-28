@@ -1,6 +1,6 @@
 package com.feiqu.framwork.util;
 
-import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.util.HtmlUtils;
@@ -42,10 +42,10 @@ public class StringEscapeEditor extends PropertyEditorSupport {
                 value = HtmlUtils.htmlEscape(value);
 //                logger.info("escapeHTML > value:" + value);
             }
-            if (escapeJavaScript) {
-                value = StringEscapeUtils.escapeJavaScript(value);
-//                logger.info("escapeJavaScript > value:" + value);
-            }
+//            if (escapeJavaScript) {
+//                value = StringEscapeUtils.escapeJavaScript(value);
+////                logger.info("escapeJavaScript > value:" + value);
+//            }
             setValue(value);
         }
     }

@@ -16,7 +16,6 @@
     </description>
 
     <properties>
-        <jeesuite.version>1.2.0</jeesuite.version>
     </properties>
 
     <dependencies>
@@ -102,33 +101,45 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid-spring-boot-starter</artifactId>
-            <version>${druid.version}</version>
         </dependency>
         <!-- pagehelper 分页插件 -->
         <dependency>
             <groupId>com.github.pagehelper</groupId>
             <artifactId>pagehelper-spring-boot-starter</artifactId>
-            <version>${pagehelper.boot.version}</version>
         </dependency>
-
+        <!-- redis,使用jedis客户端排除lettuce -->
         <dependency>
-            <groupId>javax.mail</groupId>
-            <artifactId>mail</artifactId>
-            <version>1.4.7</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+                        <optional>true</optional>
+                        <exclusions>
+                            <exclusion>
+                                <groupId>io.lettuce</groupId>
+                                <artifactId>lettuce-core</artifactId>
+                            </exclusion>
+                        </exclusions>
+        </dependency>
+                <dependency>
+                    <groupId>redis.clients</groupId>
+                    <artifactId>jedis</artifactId>
+                    <optional>true</optional>
+                </dependency>
+        <!--常用工具类 -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
         </dependency>
 
         <!--七牛-->
         <dependency>
             <groupId>com.qiniu</groupId>
             <artifactId>qiniu-java-sdk</artifactId>
-            <version>7.2.2</version>
         </dependency>
 
         <!--阿里云需依赖-->
         <dependency>
             <groupId>com.aliyun.oss</groupId>
             <artifactId>aliyun-sdk-oss</artifactId>
-            <version>2.8.1</version>
             <exclusions>
                 <exclusion>
                     <artifactId>ezmorph</artifactId>
@@ -140,7 +151,6 @@
         <dependency>
             <groupId>com.jeesuite</groupId>
             <artifactId>jeesuite-filesystem</artifactId>
-            <version>${jeesuite.version}</version>
             <exclusions>
                 <exclusion>
                     <artifactId>jmimemagic</artifactId>
@@ -153,17 +163,7 @@
             </exclusions>
         </dependency>
 
-        <dependency>
-            <groupId>com.jeesuite</groupId>
-            <artifactId>jeesuite-cache</artifactId>
-            <version>${jeesuite.version}</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>guava</artifactId>
-                    <groupId>com.google.guava</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
+
 
     </dependencies>
 

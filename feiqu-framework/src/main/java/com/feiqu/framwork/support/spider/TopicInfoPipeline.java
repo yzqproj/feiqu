@@ -9,7 +9,7 @@ import com.feiqu.system.mapper.FqTopicReplyMapper;
 import com.feiqu.system.model.FqTopic;
 import com.feiqu.system.model.FqTopicExample;
 import com.feiqu.system.model.FqTopicReply;
-import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 import us.codecraft.webmagic.Task;

@@ -12,7 +12,7 @@ import com.jeesuite.cache.redis.JedisProviderFactory;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import redis.clients.jedis.JedisCommands;
+import redis.clients.jedis.commands.JedisCommands;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -54,32 +54,32 @@ public class Functions {
     public FqUserCache currentUser(HttpServletRequest request, HttpServletResponse response) {
         return webUtil.currentUser(request, response);
     }
-
-    public String currentBgImgUrl(int uid){
-        if(uid <= 0){return "";}
-        JedisCommands commands = JedisProviderFactory.getJedisCommands(null);
-        try {
-            String key = CacheManager.getUserBackImgKey(uid);
-            String picUrl = commands.get(key);
-            if(StringUtils.isEmpty(picUrl)){
-                FqBackgroundImgService fqBackgroundImgService = SpringUtils.getBean("fqBackgroundImgServiceImpl");
-                FqBackgroundImgExample example = new FqBackgroundImgExample();
-                example.createCriteria().andUserIdEqualTo(uid).andDelFlagEqualTo(YesNoEnum.NO.getValue());
-                FqBackgroundImg fqBackgroundImg = fqBackgroundImgService.selectFirstByExample(example);
-                if(fqBackgroundImg != null){
-                    picUrl = fqBackgroundImg.getImgUrl();
-                }else {
-                    picUrl = "null";
-                }
-                commands.set(key,picUrl);
-                commands.expire(key,60*60*24);
-                return picUrl;
-            }else {
-                return picUrl;
-            }
-        } finally{
-            JedisProviderFactory.getJedisProvider(null).release();
-        }
-//        return CommonConstant.bgImgUrl;
-    }
+//
+//    public String currentBgImgUrl(int uid){
+//        if(uid <= 0){return "";}
+//        JedisCommands commands = JedisProviderFactory.getJedisCommands(null);
+//        try {
+//            String key = CacheManager.getUserBackImgKey(uid);
+//            String picUrl = commands.get(key);
+//            if(StringUtils.isEmpty(picUrl)){
+//                FqBackgroundImgService fqBackgroundImgService = SpringUtils.getBean("fqBackgroundImgServiceImpl");
+//                FqBackgroundImgExample example = new FqBackgroundImgExample();
+//                example.createCriteria().andUserIdEqualTo(uid).andDelFlagEqualTo(YesNoEnum.NO.getValue());
+//                FqBackgroundImg fqBackgroundImg = fqBackgroundImgService.selectFirstByExample(example);
+//                if(fqBackgroundImg != null){
+//                    picUrl = fqBackgroundImg.getImgUrl();
+//                }else {
+//                    picUrl = "null";
+//                }
+//                commands.set(key,picUrl);
+//                commands.expire(key,60*60*24);
+//                return picUrl;
+//            }else {
+//                return picUrl;
+//            }
+//        } finally{
+//            JedisProviderFactory.getJedisProvider(null).release();
+//        }
+////        return CommonConstant.bgImgUrl;
+//    }
 }
