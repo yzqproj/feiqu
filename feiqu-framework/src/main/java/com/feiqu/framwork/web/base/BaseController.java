@@ -19,11 +19,10 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * web层通用数据处理
- * 
+ *
  * @author ruoyi
  */
-public class BaseController
-{
+public class BaseController {
     private final static Logger _log = LoggerFactory.getLogger(BaseController.class);
 
     protected static final String USER_LOGIN_REDIRECT_URL = "redirect:/u/login";
@@ -31,8 +30,10 @@ public class BaseController
     protected static final String GENERAL_CUSTOM_ERROR_URL = "/error/generalCustomError";
     protected static final String GENERAL_NOT_FOUNF_404_URL = "/404";
     protected static final String GENERAL_TOPIC_DELETED_URL = "/topic-deleted";
+
     /**
      * 统一异常处理
+     *
      * @param request
      * @param response
      * @param exception
@@ -50,14 +51,12 @@ public class BaseController
     @InitBinder
     public void initBinder(ServletRequestDataBinder binder) {
         /**
-
          * 自动转换日期类型的字段格式
 
          */
 //        binder.registerCustomEditor(Date.class, new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"), true));
 
         /**
-
          * 防止XSS攻击 改使用filter 又改回来了
 
          */
@@ -65,12 +64,12 @@ public class BaseController
         binder.registerCustomEditor(String.class, new StringEscapeEditor(true, false));
     }
 
-    protected FqUserCache getCurrentUser(HttpServletRequest request, HttpServletResponse response){
+    protected FqUserCache getCurrentUser(HttpServletRequest request, HttpServletResponse response) {
         WebUtil webUtil = SpringContextUtil.getBean(WebUtil.class);
-        return webUtil.currentUser(request,response);
+        return webUtil.currentUser(request, response);
     }
 
-    protected FqUserCache getCurrentUser(){
+    protected FqUserCache getCurrentUser() {
         ServletRequestAttributes servletRequestAttributes = ((ServletRequestAttributes) RequestContextHolder
                 .getRequestAttributes());
         HttpServletRequest request = servletRequestAttributes
@@ -78,29 +77,27 @@ public class BaseController
         HttpServletResponse response = servletRequestAttributes
                 .getResponse();
         WebUtil webUtil = SpringUtils.getBean(WebUtil.class);
-        return webUtil.currentUser(request,response);
+        return webUtil.currentUser(request, response);
     }
 
     /**
      * 返回失败消息
      */
-    public AjaxResult error(String errorMsg)
-    {
+    public AjaxResult error(String errorMsg) {
         return AjaxResult.error(errorMsg);
     }
 
     /**
      * 返回失败消息
      */
-    public AjaxResult error()
-    {
+    public AjaxResult error() {
         return AjaxResult.error();
     }
+
     /**
      * 返回成功
      */
-    public AjaxResult success()
-    {
+    public AjaxResult success() {
         return AjaxResult.success();
     }
 }

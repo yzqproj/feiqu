@@ -12,16 +12,15 @@ import java.util.Map;
 
 /**
  * 全局配置类
- * 
+ *
  * @author ruoyi
  */
-public class Global
-{
+public class Global {
     private static final Logger log = LoggerFactory.getLogger(Global.class);
 
     private static String NAME = "application.yml";
 
-    private static Props props = new Props("application.properties");
+    private static Props props = new Props("app.properties");
 
     /**
      * 当前对象实例
@@ -33,20 +32,16 @@ public class Global
      */
     private static Map<String, String> map = new HashMap<String, String>();
 
-    private Global()
-    {
+    private Global() {
     }
 
     /**
      * 静态工厂方法 获取当前对象实例 多线程安全单例模式(使用双重同步锁)
      */
 
-    public static synchronized Global getInstance()
-    {
-        if (global == null)
-        {
-            synchronized (Global.class)
-            {
+    public static synchronized Global getInstance() {
+        if (global == null) {
+            synchronized (Global.class) {
                 if (global == null)
                     global = new Global();
             }
@@ -57,23 +52,18 @@ public class Global
     /**
      * 获取配置
      */
-    public static String getConfig(String key)
-    {
+    public static String getConfig(String key) {
         String value = map.get(key);
-        if (value == null)
-        {
+        if (value == null) {
             Map<?, ?> yamlMap = null;
-            try
-            {
+            try {
                 yamlMap = YamlUtil.loadYaml(NAME);
                 String env = String.valueOf(YamlUtil.getProperty(yamlMap, "spring.profiles.active"));
-                yamlMap = YamlUtil.loadYaml("application-"+env+".yml");
+                yamlMap = YamlUtil.loadYaml("application-" + env + ".yml");
                 Object property = YamlUtil.getProperty(yamlMap, key);
-                value = property == null?StringUtils.EMPTY:String.valueOf(property);
+                value = property == null ? StringUtils.EMPTY : String.valueOf(property);
                 map.put(key, value);
-            }
-            catch (FileNotFoundException e)
-            {
+            } catch (FileNotFoundException e) {
                 log.error("获取全局配置异常 {}", key);
             }
         }
@@ -83,8 +73,7 @@ public class Global
     /**
      * 获取配置
      */
-    public static String getPropertiesConfig(String key)
-    {
+    public static String getPropertiesConfig(String key) {
         String value = props.getStr(key);
         return value;
     }
@@ -116,48 +105,42 @@ public class Global
     /**
      * 获取ip地址开关
      */
-    public static Boolean isAddressEnabled()
-    {
+    public static Boolean isAddressEnabled() {
         return Boolean.valueOf(getConfig("ruoyi.addressEnabled"));
     }
 
     /**
      * 获取文件上传路径
      */
-    public static String getProfile()
-    {
+    public static String getProfile() {
         return getConfig("ruoyi.profile");
     }
 
     /**
      * 获取头像上传路径
      */
-    public static String getAvatarPath()
-    {
+    public static String getAvatarPath() {
         return getConfig("ruoyi.profile") + "avatar/";
     }
 
     /**
      * 获取下载路径
      */
-    public static String getDownloadPath()
-    {
+    public static String getDownloadPath() {
         return getConfig("ruoyi.profile") + "download/";
     }
 
     /**
      * 获取上传路径
      */
-    public static String getUploadPath()
-    {
+    public static String getUploadPath() {
         return getConfig("ruoyi.profile") + "upload/";
     }
 
     /**
      * 获取作者
      */
-    public static String getAuthor()
-    {
+    public static String getAuthor() {
 //        return StringUtils.nvl(getConfig("gen.author"), "ruoyi");
         return null;
     }
@@ -170,7 +153,7 @@ public class Global
         return StringUtils.nvl(getConfig("gen.packageName"), "com.ruoyi.project.module");
     }*/
 
-  /*  *//**
+    /*  *//**
      * 是否自动去除表前缀
      *//*
     public static String getAutoRemovePre()

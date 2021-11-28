@@ -10,9 +10,9 @@ feiqu:
   profile: D:/profile/
   # 获取ip地址开关
   addressEnabled: true
-#  css
+  #  css
   cssVersion: 1547879679208
-#  layui js
+  #  layui js
   layuiVersion: 1547879679211
 
   domainUrl: http://localhost:8080
@@ -26,22 +26,8 @@ feiqu-redis:
   password:
   mode: standalone
 
-# 开发环境配置
-server:
-  # 服务端口
-  port: 8080
-  servlet:
-    # 项目contextPath
-    context-path: /
-  tomcat:
-    # tomcat的URI编码
-    uri-encoding: UTF-8
-    # tomcat最大线程数，默认为200
-    max-threads: 800
-    # Tomcat启动初始化的线程数，默认值25
-    min-spare-threads: 30
-  address: 0.0.0.0
- 
+
+
 # 日志配置
 logging:
   level:
@@ -58,11 +44,11 @@ user:
 # Spring配置
 spring:
   mvc:
-      throw-exception-if-no-handler-found: true
-      static-path-pattern: /**
+    throw-exception-if-no-handler-found: true
+    static-path-pattern: /**
   mail:
     default-encoding: utf-8
-    host:  smtp.qq.com #改成你的邮件主机
+    host: smtp.qq.com #改成你的邮件主机
     username: 123@qq.com #邮件服务 登陆用户名
     password: 2333 #邮件服务 登陆密码
     protocol: smtps
@@ -73,89 +59,89 @@ spring:
   jackson:
     time-zone: GMT+8
     date-format: yyyy-MM-dd HH:mm:ss
-  profiles: 
   # 文件上传
   servlet:
-     multipart:
-       max-file-size:  30MB
-       max-request-size:  30MB
+    multipart:
+      max-file-size: 30MB
+      max-request-size: 30MB
   # 服务模块
   devtools:
     restart:
       # 热部署开关
       enabled: true
   datasource:
-          type: com.alibaba.druid.pool.DruidDataSource
-          driverClassName: com.mysql.cj.jdbc.Driver
-          druid:
-              # 主库数据源
-              master:
-                  url: jdbc:mysql://localhost:3306/cwd_boring?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
-                  username: root
-                  encoded-password: 123456
-              # 从库数据源
-              slave:
-                  # 从数据源开关/默认关闭
-                  enabled: false
-                  url: jdbc:mysql://localhost:3306/second?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
-                  username: root
-                  encoded-password: B2v71f9TGEinS8kn/4xssw==
-              # 初始连接数
-              initialSize: 5
-              # 最小连接池数量
-              minIdle: 10
-              # 最大连接池数量
-              maxActive: 20
-              # 配置获取连接等待超时的时间
-              maxWait: 60000
-              # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
-              timeBetweenEvictionRunsMillis: 60000
-              # 配置一个连接在池中最小生存的时间，单位是毫秒
-              minEvictableIdleTimeMillis: 300000
-              # 配置一个连接在池中最大生存的时间，单位是毫秒
-              maxEvictableIdleTimeMillis: 900000
-              # 配置检测连接是否有效
-              validationQuery: SELECT 1 FROM DUAL
-              testWhileIdle: true
-              testOnBorrow: false
-              testOnReturn: false
-              statViewServlet:
-                  login-username: chenweidong
-                  login-password: wei930720
-                  enabled: true
-                  url-pattern: /druid/*
-                  reset-enable: true
-              filter:
-                  stat:
-                      # 慢SQL记录
-                      log-slow-sql: true
-                      slow-sql-millis: 1000
-                      merge-sql: true
-                  wall:
-                      config:
-                          multi-statement-allow: true
+    type: com.alibaba.druid.pool.DruidDataSource
+
+    druid:
+      # 主库数据源
+      master:
+        url: jdbc:mysql://localhost:3306/cwd_boring?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+        username: root
+        encoded-password: MEciwDyfCb6lap2bpkdJhg==
+      # 从库数据源
+      slave:
+        # 从数据源开关/默认关闭
+        enabled: false
+        url: jdbc:mysql://localhost:3306/second?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+        username: root
+        encoded-password: B2v71f9TGEinS8kn/4xssw==
+      # 初始连接数
+      initial-size: 5
+      # 最小连接池数量
+      minIdle: 10
+      # 最大连接池数量
+      maxActive: 20
+      # 配置获取连接等待超时的时间
+      maxWait: 60000
+      # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      timeBetweenEvictionRunsMillis: 60000
+      # 配置一个连接在池中最小生存的时间，单位是毫秒
+      minEvictableIdleTimeMillis: 300000
+      # 配置一个连接在池中最大生存的时间，单位是毫秒
+      maxEvictableIdleTimeMillis: 900000
+      # 配置检测连接是否有效
+      validationQuery: SELECT 1 FROM DUAL
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      statViewServlet:
+        login-username: chenweidong
+        login-password: wei930720
+        enabled: true
+        url-pattern: /druid/*
+        reset-enable: true
+      filter:
+        stat:
+          # 慢SQL记录
+          log-slow-sql: true
+          slow-sql-millis: 1000
+          merge-sql: true
+        wall:
+          config:
+            multi-statement-allow: true
+    driver-class-name: com.mysql.cj.jdbc.Driver
   web:
     resources:
       static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/
 
 # MyBatis
 mybatis:
-    # 搜索指定包别名
-    typeAliasesPackage: com.feiqu.system.model
-    # 配置mapper的扫描，找到所有的mapper.xml映射文件
-    mapperLocations: classpath*:mapper/*Mapper.xml
-    # 加载全局的配置文件
-    configLocation: classpath:/mybatis-config.xml
+  # 搜索指定包别名
+  typeAliasesPackage: com.feiqu.system.model
+  # 配置mapper的扫描，找到所有的mapper.xml映射文件
+  mapperLocations: classpath*:mapper/*Mapper.xml
+  # 加载全局的配置文件
+  configLocation: classpath:/mybatis-config.xml
 
 # PageHelper分页插件
-pagehelper: 
+pagehelper:
   helperDialect: mysql
   reasonable: true
   supportMethodsArguments: true
   params: count=countSql
 
 # 代码生成
-gen: 
+gen:
   # 作者
   author: chenweidong
   # 默认生成包路径 system 需改成自己的模块名称 如 system monitor tool

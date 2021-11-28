@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -26,14 +27,14 @@ import java.util.List;
 
 public class ArticleServiceImpl extends BaseServiceImpl<ArticleMapper, Article, ArticleExample> implements ArticleService {
 
-    private static Logger _log = LoggerFactory.getLogger(ArticleServiceImpl.class);
 
-    @Autowired
+    @Resource
     ArticleMapper articleMapper;
 
     /*
     吧content去掉，减小mysql传输的成本 这里我之前写错了。
      */
+    @Override
     public List<ArticleUserDetail> selectUserByExampleWithBLOBs(ArticleExample example) {
         return articleMapper.selectUserByExampleWithBLOBs(example);
     }
