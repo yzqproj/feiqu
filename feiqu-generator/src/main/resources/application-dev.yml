@@ -96,18 +96,18 @@ spring:
 #      enabled: true
   datasource:
           type: com.alibaba.druid.pool.DruidDataSource
-          driverClassName: com.mysql.cj.jdbc.Driver
+          driverClassName: org.postgresql.Driver
           druid:
               # 主库数据源
               master:
-                  url: jdbc:mysql://localhost:3306/cwd_boring?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
-                  username: root
+                  url: jdbc:postgresql://localhost:5432/feiqu?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+                  username: postgres
                   encoded-password: B2v71f9TGEinS8kn/4xssw==
               # 从库数据源
               slave:
                   # 从数据源开关/默认关闭
                   enabled: false
-                  url: jdbc:mysql://localhost:3306/second?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+                  url: jdbc:postgresql://localhost:5432/second?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
                   username: root
                   encoded-password: B2v71f9TGEinS8kn/4xssw==
               # 初始连接数
